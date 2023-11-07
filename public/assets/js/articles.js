@@ -8,6 +8,7 @@ function formatDateWithMoment(isoString) {
 
 function dataFetcher() {
     const SUPABASE_URL = 'https://neutgwolrftsfsvfhutp.supabase.co';
+    // If you're reading this, this key is safe for me to share :)
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ldXRnd29scmZ0c2ZzdmZodXRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTkzNjY4ODYsImV4cCI6MjAxNDk0Mjg4Nn0.jeV6s1rVlm-l-Tgny8lPq0CQheCq10ch7xyjQ0P2G84';
 
     return {
