@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="assets/css/fontawesome/css/all.min.css"/>
     <link rel="stylesheet" href="assets/css/tailwindcss/tailwindcss.css" />
     <link rel="stylesheet" href="assets/css/app-0.1.0.css" />
+    <script type="text/javascript" src="assets/js/moment-2.29.4.js"></script>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 dark:text-white">
     <script type="text/javascript" src="assets/js/articles.js"></script>
@@ -65,7 +66,7 @@
                   <template x-for="item in filteredArticles" :key="item.id">
                       <li class="p-2 flex flex-col gap-1 border-b border-slate-200 dark:border-slate-800">
                           <span x-text="item.content"></span>
-                          <span class="text-xs text-gray-600" x-text="item.formatDateWithMoment(item.created_at)"></span>
+                          <span class="text-xs text-gray-600" x-text="item.created_at"></span>
                           <div class="flex gap-1">
                               <template x-for="tag in item.tags" :key="tag">
                                   <span class="item-tag text-xs text-gray-600 cursor-pointer"
@@ -86,7 +87,6 @@
         <div class="md:flex-grow h-full"></div>
     </div>
     <script type="text/javascript" src="assets/js/micromodal-0.4.10.min.js"></script>
-    <script type="text/javascript" src="assets/js/moment-2.29.4.js"></script>
     <script type="text/javascript" src="assets/js/alpinejs-3.13.2.min.js"></script>
     <script type="text/javascript" src="assets/js/app-0.1.0.js"></script>
 </body>

@@ -1,3 +1,11 @@
+function formatDateWithMoment(isoString) {
+    const momentDate = moment(isoString);
+    const formattedDate = momentDate.tz('America/New_York').format('YYYY-MM-DD HH:mm:ss z');
+    const relativeTime = momentDate.fromNow();
+  
+    return `${formattedDate} (${relativeTime})`;
+};
+
 function dataFetcher() {
     const SUPABASE_URL = 'https://neutgwolrftsfsvfhutp.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ldXRnd29scmZ0c2ZzdmZodXRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTkzNjY4ODYsImV4cCI6MjAxNDk0Mjg4Nn0.jeV6s1rVlm-l-Tgny8lPq0CQheCq10ch7xyjQ0P2G84';
@@ -25,6 +33,7 @@ function dataFetcher() {
                 data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
                 this.articles = data.map(article => ({
                     ...article,
+                    created_at: formatDateWithMoment(article.created_at),
                     tags: article.tags ? article.tags.split(",") : [],
                 }));
             } catch (error) {
