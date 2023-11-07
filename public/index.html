@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+    <link rel="stylesheet" href="assets/css/fontawesome/css/all.min.css"/>
+    <link rel="stylesheet" href="assets/css/tailwindcss/tailwindcss.css" />
+    <link rel="stylesheet" href="assets/css/app-0.1.0.css" />
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 dark:text-white">
+    <script type="text/javascript" src="assets/js/articles.js"></script>
+    <div class="h-full w-full flex">
+        <div class="md:flex-grow h-full"></div>
+        <div id="data-container" class="w-full md:w-10/12 lg:w-8/12 md:border-x border-slate-200 dark:border-slate-800 h-full flex flex-col overflow-auto"
+        x-data="dataFetcher()" x-init="fetchData()">
+
+            <div id="top-cap" class="h-auto bg-pink-300 border-b border-slate-200 dark:border-slate-800 flex items-center">
+            </div>
+            <div id="header" class="h-44 lg:h-56 border-b border-slate-200 dark:border-slate-800 flex items-center">
+                <div class="h-full overflow-hidden">
+                    <img class="" src="assets/images/test_header.jpg">
+                </div>
+            </div>
+            <div id="profile" class="pb-4 border-b border-slate-200 dark:border-slate-800 flex items-center">
+                <div class="h-full w-full relative px-2">
+                    <div class="rounded-lg overflow-hidden absolute -translate-y-1/2 border-4 border-slate-200 dark:border-black">
+                        <img id="pfp" class="h-20 w-20" src="assets/images/pfp.rainbow.superzoomed@2x.png">
+                    </div>
+                    <div class="mt-12"></div>
+                    <p id="display_name" class="font-black text-2xl">ryan</p>
+                    <p id="handle" class="font-black text-pink-300 text-md">ryandawes</p>
+                    <p id="desc" class="my-2">hi, mom!</p>
+                    <p class="opacity-50 text-sm select-none"><i class="mr-1 fa-solid fa-location-arrow"></i>United States, Earth</p>
+                    <div class="mt-2 p-2 w-full flex flex-wrap gap-x-4 gap-y-2 justify-center text-sm border border-slate-200 dark:border-slate-800 rounded-lg ">
+                        <a class="text-blue-400 hover:underline" href="https://dawes.cc"><i class="mr-1 text-gray-600 dark:text-gray-100 text-lg fa-solid fa-link"></i>dawes.cc</a>
+                        <a class="text-blue-400 hover:underline" href="https://github.com/dawescc"><i class="mr-1 text-gray-600 dark:text-gray-100 text-lg fa-brands fa-github"></i>@dawescc</a>
+                        <a class="text-blue-400 hover:underline" href="https://ko-fi.com/dawes"><i class="mr-1 text-gray-600 dark:text-gray-100 text-lg fa-brands fa-dollar-sign"></i>@dawescc</a>
+                    </div>
+                </div>
+            </div>
+            <div id="topics" class="pb-4 border-b border-slate-200 dark:border-slate-800">
+              <div class="h-full w-full px-1 pt-1">
+                  <p class="text-sm opacity-50">Topics:</p>
+                  <div class="flex flex-wrap gap-2 mt-2 text-black">
+                      <!-- All Topics Button -->
+                      <span class="text-xs font-semibold mr-2 px-2.5 py-0.5 rounded cursor-pointer select-none hover:bg-pink-300"
+                          :class="selectedTag === null ? 'bg-pink-200' : 'bg-gray-50'"
+                          @click="selectedTag = null">
+                          All
+                      </span>
+                      <!-- Topics Buttons -->
+                      <template x-for="tag in topics" :key="tag">
+                          <span :class="selectedTag === tag ? 'bg-pink-200' : 'bg-gray-50'"
+                              class="text-xs font-semibold mr-2 px-2.5 py-0.5 rounded cursor-pointer select-none hover:bg-pink-300"
+                              @click="selectedTag = selectedTag === tag ? null : tag"
+                              x-text="tag">
+                          </span>
+                      </template>
+                  </div>
+              </div>
+            </div>
+            <div id="feed" class="pt-2">
+              <ul class="w-full h-full">
+                  <template x-for="item in filteredArticles" :key="item.id">
+                      <li class="p-2 flex flex-col gap-1 border-b border-slate-200 dark:border-slate-800">
+                          <span x-text="item.content"></span>
+                          <span class="text-xs text-gray-600" x-text="item.timestamp"></span>
+                          <div class="flex gap-1">
+                              <template x-for="tag in item.tags" :key="tag">
+                                  <span class="item-tag text-xs text-gray-600 cursor-pointer"
+                                        @click="selectedTag = selectedTag === tag ? null : tag"
+                                        x-text="tag">
+                                  </span>
+                              </template>
+                          </div>
+                      </li>
+                  </template>
+              </ul>
+            </div>
+            <div id="bot-cap" class="h-auto pt-2 pb-1 flex items-center">
+                <p class="w-full text-center text-xs text-gray-400 dark:text-gray-600">made with <i class="fa-solid fa-heart transition-all ease-in hover:text-red-500"></i> Ryan Dawes</p>
+            </div>
+
+        </div>
+        <div class="md:flex-grow h-full"></div>
+    </div>
+    <script type="text/javascript" src="assets/js/alpinejs-3.13.2.min.js"></script>
+    <script type="text/javascript" src="assets/js/micromodal-0.4.10.min.js"></script>
+    <script type="text/javascript" src="assets/js/app-0.1.0.js"></script>
+</body>
+</html>

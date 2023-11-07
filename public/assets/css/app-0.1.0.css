@@ -1,0 +1,25 @@
+@import url('micromodal/micromodal.css');
+
+body {
+	padding-top: env(safe-area-inset-top);
+	padding-right: env(safe-area-inset-right);
+	padding-bottom: env(safe-area-inset-bottom);
+	padding-left: env(safe-area-inset-left);
+}
+
+#handle:before {
+	content: "@";
+}
+
+.item-tag:before {
+    content: "#";
+} 
+
+.modal {
+	display: none;
+  }
+  
+.modal.is-open {
+display: block;
+}
+	
