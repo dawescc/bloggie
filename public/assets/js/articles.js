@@ -30,8 +30,6 @@ function dataFetcher() {
               console.error("Fetch error:", error);
             }
         },
-          
-               
         fetchTopics() {
             const allTags = new Set(this.articles.flatMap(article => article.tags));
             this.topics = Array.from(allTags).map(tag =>
