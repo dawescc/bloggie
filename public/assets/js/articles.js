@@ -1,30 +1,3 @@
-function formatDate(isoString) {
-    const date = new Date(isoString);
-    const now = new Date();
-    
-    // Convert to EST timezone assuming EST is UTC-5
-    const estDate = new Date(date.getTime() - (5 * 60 * 60 * 1000));
-    
-    const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short', timeZone: 'America/New_York' };
-    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(estDate);
-  
-    // Calculate relative time
-    const secondsAgo = Math.floor((now - date) / 1000);
-    let relativeTime;
-  
-    if (secondsAgo < 60) {
-      relativeTime = `${secondsAgo} seconds ago`;
-    } else if (secondsAgo < 3600) {
-      relativeTime = `${Math.floor(secondsAgo / 60)} minutes ago`;
-    } else if (secondsAgo < 86400) {
-      relativeTime = `${Math.floor(secondsAgo / 3600)} hours ago`;
-    } else {
-      relativeTime = `${Math.floor(secondsAgo / 86400)} days ago`;
-    }
-  
-    return `${formattedDate} (${relativeTime})`;
-}
-
 function dataFetcher() {
     const SUPABASE_URL = 'https://neutgwolrftsfsvfhutp.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ldXRnd29scmZ0c2ZzdmZodXRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTkzNjY4ODYsImV4cCI6MjAxNDk0Mjg4Nn0.jeV6s1rVlm-l-Tgny8lPq0CQheCq10ch7xyjQ0P2G84';
