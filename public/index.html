@@ -70,7 +70,7 @@
                           <span class="text-xs text-gray-600" x-text="item.created_at"></span>
                           <div class="flex gap-1">
                               <template x-for="tag in item.tags" :key="tag">
-                                  <span class="item-tag text-xs text-gray-600 cursor-pointer"
+                                  <span class="item-tag text-xs text-gray-600"
                                         @click="selectedTag = selectedTag === tag ? null : tag"
                                         x-text="tag">
                                   </span>
