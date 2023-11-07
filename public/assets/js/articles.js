@@ -8,21 +8,30 @@ function dataFetcher() {
             this.fetchTopics();
         },
         async fetchArticles() {
+            const supabaseUrl = process.env.SUPABASE_URL;
+            const supabaseKey = process.env.SUPABASE_ANON_KEY;
+          
             try {
-                const response = await fetch("/api/articles/");
-                if (!response.ok) throw new Error("Network response was not ok.");
-                let data = await response.json();
-                // Assuming your timestamp is in a field called 'timestamp' and is ISO formatted
-                data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-                this.articles = data.map(article => ({
-                    ...article,
-                    // Ensure tags field exists and is a string before splitting
-                    tags: article.tags ? article.tags.split(",") : [],
-                }));
+              const response = await fetch(`${supabaseUrl}/rest/v1/articles?select=*&order=timestamp.desc`, {
+                headers: {
+                  'apikey': supabaseKey,
+                  'Authorization': `Bearer ${supabaseKey}`,
+                }
+              });
+          
+              if (!response.ok) throw new Error("Network response was not ok.");
+              let data = await response.json();
+          
+              this.articles = data.map(article => ({
+                ...article,
+                tags: article.tags ? article.tags.split(",") : [],
+              }));
             } catch (error) {
-                console.error("Fetch error:", error);
+              console.error("Fetch error:", error);
             }
-        },        
+        },
+          
+               
         fetchTopics() {
             const allTags = new Set(this.articles.flatMap(article => article.tags));
             this.topics = Array.from(allTags).map(tag =>
