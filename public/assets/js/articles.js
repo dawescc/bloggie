@@ -9,7 +9,7 @@ function dataFetcher() {
         },
         async fetchArticles() {
             try {
-                const response = await fetch("/api/articles");
+                const response = await fetch("/api/articles/");
                 if (!response.ok) throw new Error("Network response was not ok.");
                 let data = await response.json();
                 // Assuming your timestamp is in a field called 'timestamp' and is ISO formatted
