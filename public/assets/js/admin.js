@@ -19,7 +19,7 @@ function deleteArticle(id, content) {
 }
 
 function addArticle(content, tag) {
-    const apiEndpoint = '/api/articles/';
+    const apiEndpoint = '/api/articles';
     const postData = {
         content: content,
         tags: tag
