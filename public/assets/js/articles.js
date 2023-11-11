@@ -42,7 +42,7 @@ function dataFetcher() {
             }
         },        
         fetchTopics() {
-            const allTags = new Set(this.articles.flatMap(article => article.tags));
+            const allTags = new Set(this.articles.flatMap(article => article.topic));
             this.topics = Array.from(allTags).map(tag =>
                 tag.charAt(0).toUpperCase() + tag.slice(1)
             );
