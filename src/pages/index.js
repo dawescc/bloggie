@@ -10,7 +10,7 @@ const Home = () => {
     <div className="md:flex-grow h-full"></div>
 
     <div className="w-full md:w-10/12 lg:w-8/12 md:border-x border-slate-200 dark:border-slate-800 h-full flex flex-col">
-        <div className="h-auto bg-slate-950 border-b border-slate-200 dark:border-slate-800 flex px-4 py-2 items-center">
+        <div className="h-auto border-b border-slate-200 dark:border-slate-800 flex items-center">
         </div>
         <Profile />
         <div className="pt-2 w-full">

@@ -35,7 +35,7 @@ const Feed = () => {
 
     const findReplyContent = (replyToId) => {
         const replyArticle = articles.find(article => article.id === replyToId);
-        return replyArticle ? replyArticle.content : null;
+        return replyArticle ? replyArticle : null;
     };
 
     const filteredArticles = selectedTopic
@@ -75,7 +75,7 @@ const Feed = () => {
                         <ul className="w-full h-full">
                             {filteredArticles.map((article) => (
                                 <li key={article.id} className="py-4 px-2 flex flex-col gap-1 border-b border-slate-200 dark:border-slate-800">
-                                    <div className='flex gap-1 text-xs items-center'>
+                                    <a href="#" className='flex gap-1 text-xs items-center mr-auto'>
                                         <div className="rounded-md overflow-hidden border-2 border-slate-200 dark:border-slate-800">
                                             <img id="pfp" className="h-8 w-8" src="https://neutgwolrftsfsvfhutp.supabase.co/storage/v1/object/sign/img/pfp/0.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJpbWcvcGZwLzAucG5nIiwiaWF0IjoxNjk5Mzc2MDEyLCJleHAiOjE3NjI0NDgwMTJ9.8t98N7iwrFoqfs3z5wJskH2fnoLiCF2XWFzerRh8KVo&t=2023-11-07T16%3A53%3A32.454Z"/>
                                         </div>
@@ -83,17 +83,17 @@ const Feed = () => {
                                             <span className='font-semibold'>ryan</span>
                                             <span className='text-pink-300'>@ryandawes</span>
                                         </div>
-                                    </div>
+                                    </a>
                                     
                                     {/* Article content here */}
-                                    <span className="py-2 px-2 gap-1 flex flex-col">
+                                    <span className="py-2 px-2 gap-2 flex flex-col">
                                         
                                         <span className=''>{article.content}</span>
 
                                         {/* Article Reply Content */}
                                         {article.reply_to && (
-                                            <span className="text-slate-400 text-xs p-2 rounded-md border border-slate-200 dark:border-slate-800 flex gap-2 items-center">
-                                                <i className="fa-solid fa-reply"></i> {findReplyContent(article.reply_to)}
+                                            <span className="text-slate-400 text-xs p-2 rounded-md border border-slate-200 dark:border-slate-800 bg-gray-100 dark:bg-gray-900 flex gap-2 items-center">
+                                                <i className="fa-solid fa-reply"></i> <span className="font-semibold">{findReplyContent(article.reply_to).content} &mdash; {moment(findReplyContent(article.reply_to).created_at).fromNow()}</span>
                                             </span>
                                         )}
                                     </span>
@@ -101,14 +101,14 @@ const Feed = () => {
 
 
                                     {/* Custom Date Format */}
-                                    <span className="px-2 text-xs text-gray-600">
+                                    <span className="px-2 text-xs text-gray-300 dark:text-gray-500">
                                         {moment(article.created_at).format('YYYY-MM-DD hh:mm:ss A ')} 
                                         ({moment(article.created_at).fromNow()})
                                     </span>
 
                                     {/* Optional: Display topic if it exists */}
                                     {article.topic && (
-                                        <span className="item-tag text-xs text-gray-600 px-2">
+                                        <span className="item-tag text-xs text-gray-300 dark:text-gray-500 px-2">
                                             #{article.topic}
                                         </span>
                                     )}
