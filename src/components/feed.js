@@ -88,6 +88,16 @@ const Feed = () => {
                                     {/* Article content here */}
                                     <span className="py-2 px-2 gap-2 flex flex-col">
                                         
+                                        {/* Article IMG if exists */}
+                                        {article.image_url && 
+                                        
+                                        <div className="rounded-lg overflow-hidden w-full h-auto sm:w-2/3 md:w-1/3 mx-auto aspect-square object-center
+                                                        transition-all duration-700 ease-in-out">
+                                            <img src={article.image_url} />
+                                        </div>
+                                        
+                                        }
+                                        
                                         <span className=''>{article.content}</span>
 
                                         {/* Article Reply Content */}
