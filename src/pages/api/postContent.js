@@ -1,7 +1,10 @@
-import { supabase } from "@/utils/supabaseClient";
+import { createClient } from '@supabase/supabase-js';
 
 export default async function handler(req, res) {
+
 	if (req.method === "POST") {
+
+
 		const { content, topic = null, reply_to = null, image_url = null } = req.body;
 
 		if (!content && !reply_to && !image_url) {
@@ -9,7 +12,6 @@ export default async function handler(req, res) {
 		}
 
 		try {
-
 			const { data, error } = await supabase.from("articles").insert([{ content, topic, reply_to, image_url }]);
 
 			if (error) throw error;

@@ -1,43 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../utils/supabaseClient';
 import { useAuth } from '@/context/AuthContext';
 
 export const ArticleForm = ({ isOpen, onClose, replyTo }) => {
-  const { session } = useAuth();
-  const [content, setContent] = useState('');
-  const [topic, setTopic] = useState('');
+	const [content, setContent] = useState('');
+	const [topic, setTopic] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
+	const [session, setSession] = useState(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const articleData = {
-      content,
-      topic,
-      reply_to: replyTo // Use replyTo prop to set the reply_to field
-    };
+  useEffect(() => {
+    setSession(supabase.auth.getSession());
 
-    const token = session.Authorization;
-
-    // Call the API to submit the article
-    const response = await fetch('/api/postContent', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify(articleData),
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
     });
+  }, []);
 
-    if (response.ok) {
-      // Handle success
-      console.log('Article posted successfully');
-      setContent(''); // Reset content
-      setTopic(''); // Reset topic
-      onClose();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsLoading(true);
+  
+    let postData = { content, topic, reply_to: replyTo };
+  
+    const { data, error } = await supabase
+      .from('articles')
+      .insert([postData]);
+  
+    setIsLoading(false);
+  
+    if (error) {
+      console.error('Error submitting post:', error);
     } else {
-      // Handle errors
-      const errorData = await response.json();
-      console.error('Failed to post article:', errorData.error);
-    }
-  };
+      setContent('');
+      setTopic('');
+      onClose();
+    }}
 
   if (!isOpen) return null;
 
@@ -51,8 +49,9 @@ export const ArticleForm = ({ isOpen, onClose, replyTo }) => {
 				</div>
 				<span className='hidden sm:inline-block sm:align-middle sm:h-screen'>&#8203;</span>
 				<div
-					className='inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full'
-					>
+					className='inline-block align-center bg-gray-100 dark:bg-gray-800 dark:text-white rounded-lg p-2
+                    text-left overflow-hidden shadow-xl transform transition-all
+                    sm:my-8 sm:align-middle sm:max-w-lg sm:w-full'>
 					<form
 						onSubmit={handleSubmit}
 						className='space-y-4'>
@@ -72,7 +71,8 @@ export const ArticleForm = ({ isOpen, onClose, replyTo }) => {
 
 						<div className='px-4 py-3 text-right'>
 							<button
-                                onClick={onClose}
+								type='button'
+								onClick={onClose}
 								className='py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2'>
 								<i className='fas fa-times'></i> Cancel
 							</button>
@@ -87,6 +87,5 @@ export const ArticleForm = ({ isOpen, onClose, replyTo }) => {
 			</div>
 		</div>
   );
-};
-
+}
 
