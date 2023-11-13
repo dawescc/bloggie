@@ -1,30 +1,62 @@
-import { useEffect, useState } from 'react';
-import { supabase } from '../utils/supabaseClient';
-import Profile from '../components/profile';
-import Feed from '../components/feed';
+import { useEffect, useState } from "react";
+import { supabase } from "@/utils/supabaseClient";
 
-const Home = () => {
+import { useAuth } from '@/context/AuthContext';
 
-  return (
-    <div className="h-full w-full flex">
-    <div className="md:flex-grow h-full"></div>
+import MadeWithLove from "@/components/madewithlove";
+import TopCap from "@/components/TopCap";
+import Profile from "@/components/profile";
+import Feed from "@/components/feed";
 
-    <div className="w-full md:w-10/12 lg:w-8/12 md:border-x border-slate-200 dark:border-slate-800 h-full flex flex-col">
-        <div className="h-auto border-b border-slate-200 dark:border-slate-800 flex items-center">
-        </div>
-        <Profile />
-        <div className="pt-2 w-full">
-          <Feed />
-        </div>
-        <div className="h-auto pt-2 pb-1 flex items-center">
-            <p className="w-full text-center text-xs text-gray-400 dark:text-gray-600">made with <i className="fa-solid fa-heart transition-all ease-in hover:text-red-500"></i> Ryan Dawes</p>
-        </div>
+import { ArticleForm } from "@/components/ArticleForm";
+import { FloatingButton } from "@/components/FloatingButton";
 
-    </div>
+function Home() {
+	const { session } = useAuth();
+	const [isModalOpen, setModalOpen] = useState(false);
+	const [replyTo, setReplyTo] = useState(null);
 
-    <div className="md:flex-grow h-full"></div>
-    </div>
-  );
-};
+	const handleFloatingButtonClick = () => {
+		setReplyTo(null);
+		setModalOpen(true);
+	  };
+
+	const handleReplyClick = (articleId) => {
+	  setReplyTo(articleId);
+	  setModalOpen(true);
+	};
+
+	return (
+		<div className='flex'>
+			<div className='md:flex-grow h-full'></div>
+
+			<div className='w-full md:w-10/12 lg:w-8/12 flex flex-col md:border-x border-gray-300 dark:border-gray-700'>
+				<div id='topcap' className='h-auto border-b border-gray-300 dark:border-gray-700'>
+					<TopCap session={session} />
+				</div>
+				<div id='main' className='flex flex-col'>
+					<Feed session={session} onReplyClick={handleReplyClick} />
+					
+      				
+
+					{session && 
+						<div>
+							<FloatingButton onOpen={() => setModalOpen(true)} />
+							<ArticleForm isOpen={isModalOpen} onClose={() => setModalOpen(false)} replyTo={replyTo} session={session} />
+						</div>
+					}
+
+				</div>
+				<div
+					id='botcap'
+					className='h-auto border-t border-gray-300 dark:border-gray-700'>
+					<MadeWithLove session={session} />
+				</div>
+			</div>
+
+			<div className='md:flex-grow h-full'></div>
+		</div>
+	);
+}
 
 export default Home;

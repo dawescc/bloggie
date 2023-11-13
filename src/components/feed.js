@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import moment from 'moment';
 
-const Feed = () => {
+const Feed = ({session, onReplyClick}) => {
     const [articles, setArticles] = useState([]);
     const [topics, setTopics] = useState([]);
     const [selectedTopic, setSelectedTopic] = useState(null);
+    
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -44,14 +45,14 @@ const Feed = () => {
 
         return (
             <div className="flex flex-col">
-                    {/* Topics Section */}
-                    <div className="pb-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex items-center sticky top-0">
+                    {/* Topics Section border-gray-300 dark:border-gray-700 */}
+                    <div className="pb-4 border-b border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 flex items-center sticky top-0">
                         <div className="h-full w-full px-2 pt-1">
                             <p className="text-sm opacity-50">Topics:</p>
                             <div className="flex flex-wrap gap-2 mt-2 text-black">
                                 <span
-                                    className={`text-xs font-semibold mr-2 px-2.5 py-0.5 rounded cursor-pointer select-none hover:bg-pink-300 hover:text-black ${
-                                        selectedTopic === null ? 'bg-pink-200 text-black' : 'bg-gray-100 dark:bg-gray-600 dark:text-white'
+                                    className={`text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full cursor-pointer select-none hover:bg-pink-300 hover:text-black ${
+                                        selectedTopic === null ? 'bg-pink-200 text-black' : 'bg-gray-200 dark:bg-gray-600 dark:text-white'
                                     }`}
                                     onClick={() => setSelectedTopic(null)}>
                                     All
@@ -59,8 +60,8 @@ const Feed = () => {
                                 {topics.map((topic, index) => (
                                     <span
                                         key={index}
-                                        className={`text-xs font-semibold mr-2 px-2.5 py-0.5 rounded cursor-pointer select-none hover:bg-pink-300 hover:text-black ${
-                                            selectedTopic === topic ? 'bg-pink-200 text-black' : 'bg-gray-100 dark:bg-gray-600 dark:text-white'
+                                        className={`text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full cursor-pointer select-none hover:bg-pink-300 hover:text-black ${
+                                            selectedTopic === topic ? 'bg-pink-200 text-black' : 'bg-gray-200 dark:bg-gray-600 dark:text-white'
                                         }`}
                                         onClick={() => setSelectedTopic(topic)}>
                                         {topic}
@@ -74,16 +75,16 @@ const Feed = () => {
                     <div className="pt-2">
                         <ul className="w-full h-full">
                             {filteredArticles.map((article) => (
-                                <li key={article.id} className="py-4 px-2 flex flex-col gap-1 border-b border-slate-200 dark:border-slate-800">
-                                    <a href="#" className='flex gap-1 text-xs items-center mr-auto'>
-                                        <div className="rounded-md overflow-hidden border-2 border-slate-200 dark:border-slate-800">
-                                            <img id="pfp" className="h-8 w-8" src="https://neutgwolrftsfsvfhutp.supabase.co/storage/v1/object/sign/img/pfp/0.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJpbWcvcGZwLzAucG5nIiwiaWF0IjoxNjk5Mzc2MDEyLCJleHAiOjE3NjI0NDgwMTJ9.8t98N7iwrFoqfs3z5wJskH2fnoLiCF2XWFzerRh8KVo&t=2023-11-07T16%3A53%3A32.454Z"/>
+                                <li key={article.id} className="py-4 px-2 flex flex-col gap-1 border-b border-gray-300 dark:border-gray-700">
+                                    {/*<a href="#" className='flex gap-1 text-xs items-center mr-auto'>
+                                        <div className="rounded-md overflow-hidden border border-gray-300 dark:border-gray-700">
+                                             <img id="pfp" className="h-11 w-11"
+                                            src="https://neutgwolrftsfsvfhutp.supabase.co/storage/v1/object/sign/img/pfp/0.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJpbWcvcGZwLzAucG5nIiwiaWF0IjoxNjk5Mzc2MDEyLCJleHAiOjE3NjI0NDgwMTJ9.8t98N7iwrFoqfs3z5wJskH2fnoLiCF2XWFzerRh8KVo&t=2023-11-07T16%3A53%3A32.454Z"/>
                                         </div>
-                                        <div className='flex gap-1 flex-col'>
-                                            <span className='font-semibold'>ryan</span>
-                                            <span className='text-pink-300'>@ryandawes</span>
+                                        <div className='flex flex-col text-xs'>
+                                            <span className='font-bold rounded-lg p-1 px-2 bg-pink-200 text-pink-800 -translate-x-5 -translate-y-5'>ryan</span>
                                         </div>
-                                    </a>
+                                    </a>*/}
                                     
                                     {/* Article content here */}
                                     <span className="py-2 px-2 gap-2 flex flex-col">
@@ -98,11 +99,11 @@ const Feed = () => {
                                         
                                         }
                                         
-                                        <span className=''>{article.content}</span>
+                                        <span className='text-[0.9rem]/[1.2rem] font-medium'>{article.content}</span>
 
                                         {/* Article Reply Content */}
                                         {article.reply_to && (
-                                            <span className="text-slate-400 text-xs p-2 rounded-md border border-slate-200 dark:border-slate-800 bg-gray-100 dark:bg-gray-900 flex gap-2 items-center">
+                                            <span className="text-gray-400 text-xs p-2 rounded-md border border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-800 flex gap-2 items-center">
                                                 <i className="fa-solid fa-reply"></i> <span className="font-semibold">{findReplyContent(article.reply_to).content} &mdash; {moment(findReplyContent(article.reply_to).created_at).fromNow()}</span>
                                             </span>
                                         )}
@@ -111,17 +112,26 @@ const Feed = () => {
 
 
                                     {/* Custom Date Format */}
-                                    <span className="px-2 text-xs text-gray-300 dark:text-gray-500">
+                                    <span className="px-2 text-xs text-gray-500 dark:text-gray-500">
                                         {moment(article.created_at).format('YYYY-MM-DD hh:mm:ss A ')} 
                                         ({moment(article.created_at).fromNow()})
                                     </span>
 
                                     {/* Optional: Display topic if it exists */}
                                     {article.topic && (
-                                        <span className="item-tag text-xs text-gray-300 dark:text-gray-500 px-2">
+                                        <span className="item-tag text-xs text-gray-400 dark:text-gray-500 px-2">
                                             #{article.topic}
                                         </span>
                                     )}
+
+                                     {/* If session, show reply button */}
+                                     <span className="mt-1 px-2 text-sm text-gray-700 dark:text-gray-300">
+                                        {session && (
+                                            <span className='' onClick={() => onReplyClick(article.id)}>
+                                                <i className='fa-solid fa-reply'></i>
+                                            </span>
+                                        )}
+                                    </span>
                                 </li>
                             ))}
                         </ul>
