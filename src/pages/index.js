@@ -8,8 +8,23 @@ import TopCap from "@/components/TopCap";
 import Profile from "@/components/profile";
 import Feed from "@/components/feed";
 
+import { ArticleForm } from "@/components/ArticleForm";
+import { FloatingButton } from "@/components/FloatingButton";
+
 function Home() {
 	const { session } = useAuth();
+	const [isModalOpen, setModalOpen] = useState(false);
+	const [replyTo, setReplyTo] = useState(null);
+
+	const handleFloatingButtonClick = () => {
+		setReplyTo(null);
+		setModalOpen(true);
+	  };
+
+	const handleReplyClick = (articleId) => {
+	  setReplyTo(articleId);
+	  setModalOpen(true);
+	};
 
 	return (
 		<div className='flex'>
@@ -20,10 +35,15 @@ function Home() {
 					<TopCap session={session} />
 				</div>
 				<div id='main' className='flex flex-col'>
-					<Feed session={session} />
+					<Feed session={session} onReplyClick={handleReplyClick} />
+					
+      				
 
 					{session && 
-						<Profile name={"dani"} />
+						<div>
+							<FloatingButton onOpen={() => setModalOpen(true)} />
+							<ArticleForm isOpen={isModalOpen} onClose={() => setModalOpen(false)} replyTo={replyTo} session={session} />
+						</div>
 					}
 
 				</div>

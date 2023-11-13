@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import moment from 'moment';
 
-const Feed = ({session}) => {
+const Feed = ({session, onReplyClick}) => {
     const [articles, setArticles] = useState([]);
     const [topics, setTopics] = useState([]);
     const [selectedTopic, setSelectedTopic] = useState(null);
@@ -127,7 +127,7 @@ const Feed = ({session}) => {
                                      {/* If session, show reply button */}
                                      <span className="px-2 text-xs text-gray-300 dark:text-gray-500">
                                         {session && (
-                                            <span className=''>
+                                            <span className='' onClick={() => onReplyClick(article.id)}>
                                                 <i className='fa-solid fa-reply'></i>
                                             </span>
                                         )}
