@@ -78,7 +78,8 @@ const Feed = ({session, onReplyClick}) => {
 							<li key={article.id} id={article.id}
 								className='py-8 px-4 flex flex-col gap-4 border-b border-zinc-300 dark:border-zinc-700'>
 								{/* Article content here */}
-								<span className='p-2 gap-2 flex flex-col'>
+								<span className='p-2 gap-4 flex flex-col'>
+								
 								<span className='text-[0.9rem]/[1.2rem] font-medium'>{article.content}</span>
 									
 									{/* Article IMG if exists */}
@@ -96,6 +97,12 @@ const Feed = ({session, onReplyClick}) => {
 									<span className='text-zinc-400 text-xs py-2 px-3 mx-2 rounded-md border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 flex flex-col gap-1'>
 										<span className='flex flex-col gap-1'>
 											<span className='font-semibold'>{findReplyContent(article.reply_to).content}</span>
+											{findReplyContent(article.reply_to).image_url && (
+												<div className='rounded-lg overflow-hidden w-full h-auto
+														transition-all duration-700 ease-in-out'>
+													<img className='object-cover w-full h-auto' src={findReplyContent(article.reply_to).image_url} />
+												</div>
+											)}
 										</span>
 										<span className='text-[0.55rem]'>{moment(findReplyContent(article.reply_to).created_at).fromNow()}</span>
 									</span>
