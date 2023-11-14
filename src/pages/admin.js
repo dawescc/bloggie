@@ -39,7 +39,7 @@ export default function Admin() {
             </label>
             <input 
               className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none
-                       border-gray-300 dark:border-gray-700 dark:bg-gray-100  text-gray-700" 
+                       border-zinc-300 dark:border-zinc-700 dark:bg-zinc-100  text-zinc-700" 
               id="email" 
               type="email" 
               placeholder="Email"
@@ -52,7 +52,7 @@ export default function Admin() {
             </label>
             <input 
               className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none
-                       border-gray-300 dark:border-gray-700 dark:bg-gray-100  text-gray-700" 
+                       border-zinc-300 dark:border-zinc-700 dark:bg-zinc-100  text-zinc-700" 
               id="password" 
               type="password" 
               placeholder="Password"

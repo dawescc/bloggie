@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '../utils/supabaseClient';
-import { useAuth } from '@/context/AuthContext';
 
 export const ArticleForm = ({ isOpen, onClose, replyTo }) => {
 	const [content, setContent] = useState('');
 	const [topic, setTopic] = useState('');
+	const [image_url, setImgURL] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 	const [session, setSession] = useState(null);
 
@@ -16,12 +16,18 @@ export const ArticleForm = ({ isOpen, onClose, replyTo }) => {
     });
   }, []);
 
+  const firstInputRef = useRef(null);
+  useEffect(() => {
+	  if (isOpen && firstInputRef.current) {
+		  firstInputRef.current.focus();
+	  }
+  }, [isOpen]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
   
-    let postData = { content, topic, reply_to: replyTo };
+    let postData = { content, topic, reply_to: replyTo, image_url };
   
     const { data, error } = await supabase
       .from('articles')
@@ -34,6 +40,7 @@ export const ArticleForm = ({ isOpen, onClose, replyTo }) => {
     } else {
       setContent('');
       setTopic('');
+	  setImgURL('');
       onClose();
     }}
 
@@ -52,36 +59,44 @@ export const ArticleForm = ({ isOpen, onClose, replyTo }) => {
 					className='inline-block align-center bg-gray-100 dark:bg-gray-800 dark:text-white rounded-lg p-2
                     text-left overflow-hidden shadow-xl transform transition-all
                     sm:my-8 sm:align-middle sm:max-w-lg sm:w-full'>
-					<form
+					<form id="contentform"
 						onSubmit={handleSubmit}
 						className='space-y-4'>
+						<div className='px-4 py-3 text-right flex gap-2 text-[0.75rem]/[0.75rem] w-full'>
+							
+							<button
+								type='button'
+								onClick={onClose}
+								className='py-2 px-4 bg-zinc-500 text-white rounded-full hover:bg-zinc-700'>
+								Cancel
+							</button>
+							<span className='flex-grow'></span>
+							<button
+								type='submit'
+								className='py-2 px-4 bg-blue-500 text-white rounded-full hover:bg-blue-700'>
+								Post
+							</button>
+						</div>
 						<textarea
-							className='w-full p-2 border border-gray-300 dark:border-gray-700 rounded-lg resize-none bg-gray-400 dark:bg-gray-600'
+							ref={firstInputRef}
+							className='w-full p-2 border border-zinc-300 dark:border-zinc-700 rounded-lg resize-none bg-zinc-300 dark:bg-zinc-600'
 							placeholder="What's happening?"
 							value={content}
 							onChange={(e) => setContent(e.target.value)}
 							required
 						/>
 						<input
-							className='w-full p-2 border border-gray-300 dark:border-gray-700 rounded-lg resize-none bg-gray-400 dark:bg-gray-600'
+							className='w-full p-2 border border-zinc-300 dark:border-zinc-700 rounded-lg resize-none text-zinc-800 dark:text-current bg-zinc-300 dark:bg-zinc-600'
 							placeholder='Topic (optional)'
 							value={topic}
 							onChange={(e) => setTopic(e.target.value)}
 						/>
-
-						<div className='px-4 py-3 text-right'>
-							<button
-								type='button'
-								onClick={onClose}
-								className='py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2'>
-								<i className='fas fa-times'></i> Cancel
-							</button>
-							<button
-								type='submit'
-								className='py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700 mr-2'>
-								<i className='fas fa-plus'></i> Post
-							</button>
-						</div>
+						<input
+							className='w-full p-2 border border-zinc-300 dark:border-zinc-700 rounded-lg resize-none text-zinc-800 dark:text-current bg-zinc-300 dark:bg-zinc-600'
+							placeholder='Image URL (optional)'
+							value={image_url}
+							onChange={(e) => setImgURL(e.target.value)}
+						/>
 					</form>
 				</div>
 			</div>
