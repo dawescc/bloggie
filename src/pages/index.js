@@ -10,6 +10,7 @@ import Feed from "@/components/feed";
 
 import { ArticleForm } from "@/components/ArticleForm";
 import { FloatingButton } from "@/components/FloatingButton";
+import Footer from "@/components/Footer";
 
 function Home() {
 	const { session } = useAuth();
@@ -27,17 +28,18 @@ function Home() {
 	};
 
 	return (
-		<div className='flex'>
+		<div className='flex bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-white'>
 			<div className='md:flex-grow h-full'></div>
 
-			<div className='w-full md:w-10/12 lg:w-8/12 flex flex-col md:border-x border-gray-300 dark:border-gray-700'>
-				<div id='topcap' className='h-auto border-b border-gray-300 dark:border-gray-700'>
+			<div className='w-full md:w-10/12 lg:w-8/12 flex flex-col md:border-x border-zinc-200 dark:border-zinc-700'>
+				
+				<div id='topcap' className='h-auto border-b border-zinc-200 dark:border-zinc-700'>
 					<TopCap session={session} />
 				</div>
+
 				<div id='main' className='flex flex-col'>
+					{/*<Profile /> */}
 					<Feed session={session} onReplyClick={handleReplyClick} />
-					
-      				
 
 					{session && 
 						<div>
@@ -47,10 +49,15 @@ function Home() {
 					}
 
 				</div>
+
 				<div
 					id='botcap'
-					className='h-auto border-t border-gray-300 dark:border-gray-700'>
-					<MadeWithLove session={session} />
+					className='h-auto'>
+					<MadeWithLove />
+				</div>
+
+				<div id='Footer' className="h-auto border-t border-zinc-300 dark:border-zinc-600 bg-zinc-200 dark:bg-zinc-800">
+					<Footer />
 				</div>
 			</div>
 
