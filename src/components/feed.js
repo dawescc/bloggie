@@ -75,21 +75,20 @@ const Feed = ({session, onReplyClick}) => {
 				<div className='pt-2'>
 					<ul className='w-full h-full'>
 						{filteredArticles.map((article) => (
-							<li
-								key={article.id}
+							<li key={article.id} id={article.id}
 								className='py-8 px-4 flex flex-col gap-4 border-b border-zinc-300 dark:border-zinc-700'>
 								{/* Article content here */}
 								<span className='p-2 gap-2 flex flex-col'>
+								<span className='text-[0.9rem]/[1.2rem] font-medium'>{article.content}</span>
+									
 									{/* Article IMG if exists */}
 									{article.image_url && (
 										<div
-											className='rounded-lg overflow-hidden w-full h-auto aspect-video
+											className='rounded-lg overflow-hidden w-full h-auto
                                                         transition-all duration-700 ease-in-out'>
-											<img className='object-cover' src={article.image_url} />
+											<img className='object-cover w-full h-auto' src={article.image_url} />
 										</div>
 									)}
-
-									<span className='text-[0.9rem]/[1.2rem] font-medium'>{article.content}</span>
 								</span>
 
 								{/* Article Reply Content */}

@@ -56,7 +56,7 @@ function Home() {
 					<MadeWithLove />
 				</div>
 
-				<div id='Footer' className="h-auto border-t border-zinc-300 dark:border-zinc-600 bg-zinc-200 dark:bg-zinc-800">
+				<div id='Footer' className="h-auto border-t border-zinc-300 dark:border-zinc-700 bg-zinc-200 dark:bg-zinc-800">
 					<Footer />
 				</div>
 			</div>
