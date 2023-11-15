@@ -86,7 +86,8 @@ const Feed = ({session, onReplyClick}) => {
 									{article.image_url && (
 										<div
 											className='rounded-lg overflow-hidden w-full h-auto
-                                                        transition-all duration-700 ease-in-out'>
+                                                        transition-all duration-700 ease-in-out
+														border-zinc-200 dark:border-zinc-700 border'>
 											<img className='object-cover w-full h-auto' src={article.image_url} />
 										</div>
 									)}
@@ -99,7 +100,7 @@ const Feed = ({session, onReplyClick}) => {
 											<span className='font-semibold'>{findReplyContent(article.reply_to).content}</span>
 											{findReplyContent(article.reply_to).image_url && (
 												<div className='rounded-lg overflow-hidden w-full h-auto
-														transition-all duration-700 ease-in-out'>
+														transition-all duration-700 ease-in-out border border-zinc-200 dark:border-zinc-700'>
 													<img className='object-cover w-full h-auto' src={findReplyContent(article.reply_to).image_url} />
 												</div>
 											)}
