@@ -38,7 +38,8 @@ function Home() {
 				</div>
 
 				<div id='main' className='flex flex-col'>
-					{/*<Profile /> */}
+					<Profile />
+					
 					<Feed session={session} onReplyClick={handleReplyClick} />
 
 					{session && 

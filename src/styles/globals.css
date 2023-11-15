@@ -7,6 +7,10 @@
 @import 'styles.css';
 @import 'fontawesome/css/all.min.css';
 
+html {
+	scroll-behavior: smooth;
+  }
+
 body {
 	font-family: 'Be Vietnam Pro', sans-serif;
 }

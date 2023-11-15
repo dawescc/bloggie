@@ -44,7 +44,7 @@ const Feed = ({session, onReplyClick}) => {
         : articles;
 
         return (
-			<div className='flex flex-col'>
+			<div id='feed' className='flex flex-col'>
 				{/* Topics Section border-zinc-300 dark:border-zinc-700 */}
 				<div className='p-4 pt-2 border-b border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-900 flex items-center sticky top-0'>
 					<div className='h-full w-full'>
