@@ -31,7 +31,7 @@ function Home() {
 		<div className='flex bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-white'>
 			<div className='md:flex-grow h-full'></div>
 
-			<div className='w-full md:w-10/12 lg:w-8/12 flex flex-col md:border-x border-zinc-200 dark:border-zinc-700'>
+			<div className='w-full md:w-3/4 lg:w-1/2 flex flex-col md:shadow-lg border-zinc-200 dark:border-zinc-700'>
 				
 				<div id='topcap' className='h-auto border-b border-zinc-200 dark:border-zinc-700'>
 					<TopCap session={session} />
