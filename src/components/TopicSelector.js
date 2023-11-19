@@ -6,6 +6,13 @@ const TopicSelector = ({ selectedTopic, setSelectedTopic }) => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
+	const scrollToTop = () => {
+		window.scrollTo({
+		  top: 0,
+		  behavior: 'smooth',
+		});
+	};
+
 	// Fetch topics from the API
 	useEffect(() => {
 		const fetchTopics = async () => {
@@ -73,14 +80,14 @@ const TopicSelector = ({ selectedTopic, setSelectedTopic }) => {
 			<div className='h-full w-full'>
 				<div id='topicsTop' className='overflow-hidden transition-all ease-in-out duration-[575ms] max-h-0 opacity-0'>
 					<span className='pb-2 pt-1 w-full h-full flex items-center'>
-						<span className='font-semibold'>ryan</span>
+						<a href="/" className='font-semibold hover:underline cursor-pointer'>ryan</a>
 						<span className='flex-grow'></span>
 						<span className=''>
-							<a
-								href='/'
-								className='text-xs'>
-								<i className='fa-solid fa-home'></i>
-							</a>
+							<span
+								onClick={scrollToTop}
+								className='cursor-pointer'>
+								<i className='fa-solid fa-arrow-up'></i>
+							</span>
 						</span>
 					</span>
 				</div>
