@@ -23,6 +23,14 @@ export const ArticleForm = ({ isOpen, onClose, replyTo }) => {
 	  }
   }, [isOpen]);
 
+  useEffect(() => {
+	if (isOpen) {
+		document.body.classList.add('overflow-hidden');
+	} else {
+		document.body.classList.remove('overflow-hidden');
+	}
+}, [isOpen]);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
@@ -50,13 +58,13 @@ export const ArticleForm = ({ isOpen, onClose, replyTo }) => {
 		<div
 			className='fixed z-10 overflow-y-auto top-0 w-full left-0'
 			id='modal'>
-			<div className='flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0'>
-				<div className='fixed inset-0 transition-opacity'>
-					<div className='absolute inset-0 bg-gray-900 opacity-75' />
+			<div className='flex items-center justify-center min-height-100vh text-center sm:block overflow-hidden sm:overflow-auto'>
+				<div className='fixed inset-0 transition-opacity overflow-hidden'>
+					<div className='absolute inset-0 bg-zinc-950 opacity-75' />
 				</div>
-				<span className='hidden sm:inline-block sm:align-middle sm:h-screen'>&#8203;</span>
+
 				<div
-					className='inline-block align-center bg-gray-100 dark:bg-gray-800 dark:text-white rounded-lg p-2
+					className='inline-block align-center bg-zinc-100 dark:bg-zinc-900 dark:text-zinc-100 rounded-none sm:rounded-lg pt-10 h-screen sm:h-auto sm:py-0 p-2
                     text-left overflow-hidden shadow-xl transform transition-all
                     sm:my-8 sm:align-middle sm:max-w-lg sm:w-full'>
 					<form id="contentform"

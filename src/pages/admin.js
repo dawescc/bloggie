@@ -27,7 +27,7 @@ export default function Admin() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-100">
       <div className="w-full max-w-xs">
         <form className="rounded px-8 pt-6 pb-8 mb-4" onSubmit={(e) => {
           e.preventDefault();
