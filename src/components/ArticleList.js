@@ -25,7 +25,13 @@ const ArticleList = ({ selectedTopic, setSelectedTopic, session, onReplyClick })
     const fetchArticles = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`/api/getContent?selectedTopic=${encodeURIComponent(selectedTopic || 'all')}`);
+            let url = null
+            if (selectedTopic == 'pinned') {
+                url = `/api/getPinned`
+            } else {
+                url = `/api/getContent?selectedTopic=${encodeURIComponent(selectedTopic || 'all')}`
+            }
+            const response = await fetch(url);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

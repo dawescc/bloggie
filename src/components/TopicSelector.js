@@ -89,6 +89,13 @@ const TopicSelector = ({ selectedTopic, setSelectedTopic }) => {
 				<div className='flex flex-wrap gap-2 mt-2 text-black'>
 					<span
 						className={`text-xs font-semibold mr-2 px-3 py-1 rounded-full cursor-pointer select-none hover:bg-pink-300 hover:text-black ${
+							selectedTopic === 'pinned' ? "bg-pink-200 text-black" : "bg-zinc-200 dark:bg-zinc-600 dark:text-white"
+						}`}
+						onClick={() => setSelectedTopic('pinned')}>
+						<i className="fa-solid fa-star"></i>
+					</span>
+					<span
+						className={`text-xs font-semibold mr-2 px-3 py-1 rounded-full cursor-pointer select-none hover:bg-pink-300 hover:text-black ${
 							selectedTopic === null ? "bg-pink-200 text-black" : "bg-zinc-200 dark:bg-zinc-600 dark:text-white"
 						}`}
 						onClick={() => setSelectedTopic(null)}>

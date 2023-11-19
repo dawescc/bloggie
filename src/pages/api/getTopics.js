@@ -1,4 +1,3 @@
-// getTopics.js
 import { supabase } from '@/utils/supabaseClient';
 
 let cachedTopics = null;

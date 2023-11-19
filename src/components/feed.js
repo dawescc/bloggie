@@ -4,7 +4,7 @@ import ArticleList from "./ArticleList";
 
 
 const Feed = ({ session }) => {
-	const [selectedTopic, setSelectedTopic] = useState(null);
+	const [selectedTopic, setSelectedTopic] = useState('pinned');
 
 	return (
 		<div id='feed' className='flex flex-col'>
