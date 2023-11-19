@@ -93,7 +93,17 @@ const ArticleList = ({ selectedTopic, setSelectedTopic, session, onReplyClick })
 						{/* Article Reply Content */}
 						{article.replyContent && (
 							<span className='text-zinc-400 text-xs py-2 px-3 mx-2 rounded-md border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 flex flex-col gap-1'>
-								<span className='flex flex-col gap-1'>
+								<span className='flex flex-col gap-2'>
+									{article.replyContent.pinned && (
+										<span className='mr-auto text-[0.75rem]/[1rem] text-zinc-500 dark:text-zinc-500 pt-1'>
+											<span
+												onClick={() => setSelectedTopic("pinned")}
+												className='cursor-pointer flex justify-center items-center content-center py-[0.125rem] gap-1 px-1 border border-zinc-200 dark:border-zinc-700 rounded-md'>
+												<i className='fa-solid fa-star '></i>
+												<span>featured</span>
+											</span>
+										</span>
+									)}
 									<span className='font-semibold'>{article.replyContent.content}</span>
 									{article.replyContent.image_url && (
 										<div className='rounded-lg overflow-hidden w-full h-auto transition-all duration-700 ease-in-out border border-zinc-200 dark:border-zinc-700'>
