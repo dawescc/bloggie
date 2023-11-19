@@ -17,12 +17,7 @@ function Home() {
 	const [isModalOpen, setModalOpen] = useState(false);
 	const [replyTo, setReplyTo] = useState(null);
 
-	const handleFloatingButtonClick = () => {
-		setReplyTo(null);
-		setModalOpen(true);
-	  };
-
-	const handleReplyClick = (articleId) => {
+	const onReplyClick = (articleId) => {
 	  setReplyTo(articleId);
 	  setModalOpen(true);
 	};
@@ -40,7 +35,7 @@ function Home() {
 				<div id='main' className='flex flex-col'>
 					<Profile />
 					
-					<Feed session={session} onReplyClick={handleReplyClick} />
+					<Feed session={session} onReplyClick={onReplyClick} />
 
 					{session && 
 						<div>

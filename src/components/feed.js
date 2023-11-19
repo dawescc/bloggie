@@ -3,7 +3,7 @@ import TopicSelector from "./TopicSelector";
 import ArticleList from "./ArticleList";
 
 
-const Feed = ({ session }) => {
+const Feed = ({ session, onReplyClick }) => {
 	const [selectedTopic, setSelectedTopic] = useState('pinned');
 
 	return (
@@ -13,7 +13,7 @@ const Feed = ({ session }) => {
 			<TopicSelector selectedTopic={selectedTopic} setSelectedTopic={setSelectedTopic} />
 
 			{/* Article List Section */}
-			<ArticleList selectedTopic={selectedTopic} setSelectedTopic={setSelectedTopic} session={session} />
+			<ArticleList selectedTopic={selectedTopic} setSelectedTopic={setSelectedTopic} session={session} onReplyClick={onReplyClick} />
 		
 		</div>
 	);
