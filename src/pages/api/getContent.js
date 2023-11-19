@@ -5,10 +5,6 @@ let lastFetchTime = {};
 const CACHE_DURATION = 5 * 60 * 1000; // Cache duration in milliseconds, e.g., 5 minutes
 
 export default async function handler(req, res) {
-	const allowedOrigin = 'https://blog.dawes.cc';
-	if (req.headers.origin !== allowedOrigin) {
-	    return res.status(403).json({ error: 'Access denied' });
-	}
 
 	if (req.method !== "GET") {
 		res.setHeader("Allow", ["GET"]);

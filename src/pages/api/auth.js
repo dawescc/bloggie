@@ -1,11 +1,7 @@
 import { supabase } from '@/utils/supabaseClient';
 
 export default async function handler(req, res) {
-  const allowedOrigin = 'https://blog.dawes.cc';
-  if (req.headers.origin !== allowedOrigin) {
-      return res.status(403).json({ error: 'Access denied' });
-  }
-  
+
   if (req.method === 'POST') {
     
     try {
