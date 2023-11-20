@@ -1,7 +1,7 @@
 const Profile = ({ props }) => {
 	return (
 		<div
-			className='w-full flex flex-col gap-4 px-8 pt-20 pb-8 border-b border-zinc-200 dark:border-zinc-700
+			className='w-full flex flex-col gap-4 px-8 pt-16 pb-8 border-b border-zinc-200 dark:border-zinc-700
 			bg-gradient-to-r from-indigo-200 via-red-200 to-yellow-100
 			dark:bg-gradient-to-r dark:from-zinc-700 dark:via-zinc-900 dark:to-black
 			'>
