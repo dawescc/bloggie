@@ -8,7 +8,7 @@ const Profile = ({ props }) => {
 				<div className="flex-grow"></div>
 				<div className='h-full flex flex-col gap-4 text-zinc-950'>
 					<span className='font-bold text-2xl'>ryan</span>
-					<span className='text-lg'>football fan + developer</span>
+					<span className='text-lg whitespace-nowrap'>football fan + developer</span>
 					<span className='w-full flex gap-4 items-center content-center flex-wrap text-xs'>
 						<a
 							href='https://dawes.cc'
