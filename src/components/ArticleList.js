@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import Loader from "./Loader";
 
+import DeleteButton from "./DeleteButton";
+
 const ArticleList = ({ selectedTopic, setSelectedTopic, session, onReplyClick }) => {
 	const [articles, setArticles] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -145,12 +147,14 @@ const ArticleList = ({ selectedTopic, setSelectedTopic, session, onReplyClick })
 
 						{/* If session, show reply button */}
 						{session && (
-							<span className='mt-2 px-2 text-sm ml-2 mr-auto text-zinc-700 dark:text-zinc-300 cursor-pointer rounded-lg shadow-sm border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 hover:bg-opacity-50'>
+							<span className='flex gap-6 mt-2 ml-2'>
 								<span
-									className=''
+									className='px-2 text-sm text-zinc-700 dark:text-zinc-300 cursor-pointer rounded-lg shadow-sm border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 hover:bg-opacity-50'
 									onClick={() => onReplyClick(article.id)}>
 									<i className='fa-solid fa-reply'></i>
 								</span>
+							
+								<DeleteButton ArticleID = {article.id} />
 							</span>
 						)}
 					</li>
