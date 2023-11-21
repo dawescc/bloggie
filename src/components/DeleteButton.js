@@ -31,7 +31,7 @@ const DeleteButton = ({ ArticleID }) => {
 	};
 
 	return (
-		<span className='px-2 text-sm text-zinc-700 dark:text-zinc-300 cursor-pointer rounded-lg shadow-sm border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 hover:bg-opacity-50'>
+		<span className='px-2 text-sm flex items-center justify-center content-center text-zinc-700 dark:text-zinc-300 cursor-pointer rounded-lg shadow-sm border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 hover:bg-opacity-50'>
 			<span
 				className=''
 				onClick={() => handleDelete(ArticleID)}>
