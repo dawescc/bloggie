@@ -59,8 +59,20 @@ const TopicSelector = ({ selectedTopic, setSelectedTopic }) => {
 			
 		};
 
-		window.addEventListener("scroll", handleScroll);
-		return () => window.removeEventListener("scroll", handleScroll);
+		const init = () => {
+			window.addEventListener("scroll", handleScroll);
+		};
+	
+		if (document.readyState === "complete") {
+			init();
+		} else {
+			window.addEventListener("load", init);
+		}
+	
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+			window.removeEventListener("load", init);
+		};
 	}, []);
 
     if (loading) {
