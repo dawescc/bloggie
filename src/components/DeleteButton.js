@@ -21,7 +21,6 @@ const DeleteButton = ({ ArticleID }) => {
 	};
 
 	const handleDelete = async (ArticleID) => {
-		console.log(ArticleID);
 		if (window.confirm(`Are you sure?`)) {
 			const result = await deleteArticle(ArticleID);
 			if (!result.success) {
