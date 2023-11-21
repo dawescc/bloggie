@@ -78,7 +78,11 @@ export const ArticleForm = ({ isOpen, onClose, replyTo }) => {
 								className='py-2 px-4 bg-zinc-500 text-white rounded-full hover:bg-zinc-700'>
 								Cancel
 							</button>
-							<span className='flex-grow'></span>
+							<span className='flex-grow'>
+								{replyTo && (
+									<span>{replyTo}</span>
+								)}
+							</span>
 							<button
 								type='submit'
 								className='py-2 px-4 bg-blue-500 text-white rounded-full hover:bg-blue-700'>

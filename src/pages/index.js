@@ -39,7 +39,7 @@ function Home() {
 
 					{session && 
 						<div>
-							<FloatingButton onOpen={() => setModalOpen(true)} />
+							<FloatingButton onOpen={() => { setModalOpen(true); setReplyTo(null); }} />
 							<ArticleForm isOpen={isModalOpen} onClose={() => setModalOpen(false)} replyTo={replyTo} session={session} />
 						</div>
 					}
