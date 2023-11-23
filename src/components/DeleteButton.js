@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { supabase } from "../utils/supabaseClient";
+import { Toaster, toast } from 'sonner'
+
 
 const DeleteButton = ({ ArticleID }) => {
 	const [session, setSession] = useState(null);
@@ -15,17 +17,18 @@ const DeleteButton = ({ ArticleID }) => {
 		const { error } = await supabase.from("articles").delete().eq("id", ArticleID);
 		if (error) {
 			console.error("Error deleting post:", error);
-			return { success: false, error };
+			toast.error('Error!', {
+				description: `Unable to delete ${ArticleID}.`,
+			})
 		}
-		return { success: true };
+		toast.success('Success!', {
+			description: `Deleted ${ArticleID}.`,
+		})
 	};
 
 	const handleDelete = async (ArticleID) => {
 		if (window.confirm(`Are you sure?`)) {
-			const result = await deleteArticle(ArticleID);
-			if (!result.success) {
-				alert("Failed to delete the article.");
-			}
+			const result = deleteArticle(ArticleID);
 		}
 		return null;
 	};

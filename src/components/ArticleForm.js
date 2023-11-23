@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '../utils/supabaseClient';
+import { Toaster, toast } from 'sonner'
 
-export const ArticleForm = ({ isOpen, onClose, replyTo }) => {
+export const ArticleForm = ({ open, setOpen, replyTo }) => {
 	const [content, setContent] = useState('');
 	const [topic, setTopic] = useState('');
 	const [image_url, setImgURL] = useState('');
@@ -16,20 +17,11 @@ export const ArticleForm = ({ isOpen, onClose, replyTo }) => {
     });
   }, []);
 
-  const firstInputRef = useRef(null);
   useEffect(() => {
-	  if (isOpen && firstInputRef.current) {
-		  firstInputRef.current.focus();
-	  }
-  }, [isOpen]);
-
-  useEffect(() => {
-	if (isOpen) {
-		document.body.classList.add('overflow-hidden');
-	} else {
-		document.body.classList.remove('overflow-hidden');
+	if (open === false) {
+		replyTo = null;
 	}
-}, [isOpen]);
+}, [open]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -45,74 +37,55 @@ export const ArticleForm = ({ isOpen, onClose, replyTo }) => {
   
     if (error) {
       console.error('Error submitting post:', error);
+	  toast.error('Error!', {
+		description: 'Unable to deliver.',
+	  })
     } else {
       setContent('');
       setTopic('');
 	  setImgURL('');
-      onClose();
+	  setOpen(false)
+	  toast.success('Success!', {
+		description: 'Post delivered.',
+	  })
     }}
 
-  if (!isOpen) return null;
-
   return (
-		<div
-			className='fixed z-10 overflow-y-auto top-0 w-full left-0'
-			id='modal'>
-			<div className='flex items-center justify-center min-height-100vh text-center sm:block overflow-hidden sm:overflow-auto'>
-				<div className='fixed inset-0 transition-opacity overflow-hidden'>
-					<div className='absolute inset-0 bg-zinc-950 opacity-75' />
-				</div>
-
-				<div
-					className='inline-block align-center bg-zinc-100 dark:bg-zinc-900 dark:text-zinc-100 rounded-none sm:rounded-lg pt-10 h-screen sm:h-auto sm:py-0 p-2
-                    text-left overflow-hidden shadow-xl transform transition-all
-                    sm:my-8 sm:align-middle sm:max-w-lg sm:w-full'>
-					<form id="contentform"
-						onSubmit={handleSubmit}
-						className='space-y-4'>
-						<div className='px-4 py-3 text-right flex gap-2 text-[0.75rem]/[0.75rem] w-full'>
-							
-							<button
-								type='button'
-								onClick={onClose}
-								className='py-2 px-4 bg-zinc-500 text-white rounded-full hover:bg-zinc-700'>
-								Cancel
-							</button>
-							<span className='flex-grow'>
-								{replyTo && (
-									<span>{replyTo}</span>
-								)}
-							</span>
-							<button
-								type='submit'
-								className='py-2 px-4 bg-blue-500 text-white rounded-full hover:bg-blue-700'>
-								Post
-							</button>
-						</div>
-						<textarea
-							ref={firstInputRef}
-							className='w-full p-2 border border-zinc-300 dark:border-zinc-700 rounded-lg resize-none bg-zinc-300 dark:bg-zinc-600'
-							placeholder="What's happening?"
-							value={content}
-							onChange={(e) => setContent(e.target.value)}
-							required
-						/>
-						<input
-							className='w-full p-2 border border-zinc-300 dark:border-zinc-700 rounded-lg resize-none text-zinc-800 dark:text-current bg-zinc-300 dark:bg-zinc-600'
-							placeholder='Topic (optional)'
-							value={topic}
-							onChange={(e) => setTopic(e.target.value)}
-						/>
-						<input
-							className='w-full p-2 border border-zinc-300 dark:border-zinc-700 rounded-lg resize-none text-zinc-800 dark:text-current bg-zinc-300 dark:bg-zinc-600'
-							placeholder='Image URL (optional)'
-							value={image_url}
-							onChange={(e) => setImgURL(e.target.value)}
-						/>
-					</form>
-				</div>
-			</div>
-		</div>
+	<form id="contentform"
+	onSubmit={handleSubmit}
+	className='space-y-4'>
+	<div className='py-3 text-right flex gap-2 text-[0.75rem]/[0.75rem] w-full'>
+		<span className='flex-grow flex items-center content-center'>
+			{replyTo && (
+				<span className='py-1 px-2 bg-black bg-opacity-25 rounded-full'>Replying to {replyTo}</span>
+			)}
+		</span>
+		<button
+			type='submit'
+			className='py-2 px-4 bg-blue-500 text-white rounded-full hover:bg-blue-700'>
+			Post
+		</button>
+	</div>
+	<textarea
+		className='w-full p-2 border border-zinc-300 dark:border-zinc-700 rounded-lg resize-none bg-zinc-300 dark:bg-zinc-600'
+		placeholder="What's happening?"
+		value={content}
+		onChange={(e) => setContent(e.target.value)}
+		required
+	/>
+	<input
+		className='w-full p-2 border border-zinc-300 dark:border-zinc-700 rounded-lg resize-none text-zinc-800 dark:text-current bg-zinc-300 dark:bg-zinc-600'
+		placeholder='Topic (optional)'
+		value={topic}
+		onChange={(e) => setTopic(e.target.value)}
+	/>
+	<input
+		className='w-full p-2 border border-zinc-300 dark:border-zinc-700 rounded-lg resize-none text-zinc-800 dark:text-current bg-zinc-300 dark:bg-zinc-600'
+		placeholder='Image URL (optional)'
+		value={image_url}
+		onChange={(e) => setImgURL(e.target.value)}
+	/>
+</form>
   );
 }
 
