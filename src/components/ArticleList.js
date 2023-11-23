@@ -3,6 +3,7 @@ import moment from "moment";
 import Loader from "./Loader";
 
 import DeleteButton from "./DeleteButton";
+import PinButton from "./PinButton";
 
 const ArticleList = ({ selectedTopic, setSelectedTopic, session, onReplyClick }) => {
 	const [articles, setArticles] = useState([]);
@@ -155,6 +156,10 @@ const ArticleList = ({ selectedTopic, setSelectedTopic, session, onReplyClick })
 								</span>
 							
 								<DeleteButton ArticleID = {article.id} />
+
+								{!article.pinned && (
+									<PinButton ArticleID = {article.id}  />
+								)}
 							</span>
 						)}
 					</li>

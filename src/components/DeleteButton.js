@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
 import { Toaster, toast } from 'sonner'
-
 
 const DeleteButton = ({ ArticleID }) => {
 	const [session, setSession] = useState(null);
