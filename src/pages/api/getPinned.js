@@ -4,7 +4,8 @@ export default async function handler(req, res) {
     try {
         const { data: pinnedArticles, error } = await supabase
             .from('pinned_articles')
-            .select();
+            .select()
+            .order("created_at", { ascending: false });
 
         if (error) {
             throw error;
