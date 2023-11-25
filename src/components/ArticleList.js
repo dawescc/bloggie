@@ -78,7 +78,7 @@ const ArticleList = ({ selectedTopic, setSelectedTopic, session, onReplyClick })
 			<ul className='w-full h-full'>
 				{articles.map((article) => (
 					<li key={article.id} id={article.id}
-						className='py-8 px-4 flex flex-col gap-4 border-b border-zinc-300 dark:border-zinc-700'>
+						className={`py-8 px-4 ${session ? 'pr-8' : ''} relative flex flex-col gap-4 border-b border-zinc-300 dark:border-zinc-700`}>
 
 						{/* Article content */}
 						<span className='p-2 gap-4 flex flex-col'>

@@ -33,7 +33,7 @@ const DeleteButton = ({ ArticleID }) => {
 	};
 
 	return (
-		<span className='py-1 flex items-center justify-center content-center cursor-pointer hover:bg-white hover:bg-opacity-20'>
+		<span className='py-1 px-2 flex items-center justify-center content-center cursor-pointer hover:bg-white hover:bg-opacity-20'>
 			<span
 				className=''
 				onClick={() => handleDelete(ArticleID)}>
