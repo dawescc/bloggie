@@ -10,11 +10,14 @@ export const FloatingButton = ({open, setOpen, session, replyTo, setReplyTo }) =
 			<Drawer.Trigger asChild>
 				<button
 					onClick={() => {setOpen(true); setReplyTo(null);}}
-					className='fixed bottom-0 right-0 m-5 md:mr-10 lg:mr-20 rounded-t-full rounded-l-full p-3
-						flex justify-center content-center items-center
-						bg-pink-300 hover:bg-pink-400 cursor-pointer border border-pink-500 text-pink-700 hover:text-sky-100
-            			text-[1.15rem]/[1.15rem] select-none font-bold'>
-					<i className='fa-solid fa-signature'></i>
+					className='fixed bottom-0 right-0 m-5 md:mr-10 lg:mr-20 rounded-full p-3
+						flex justify-center content-center items-center shadow-md
+						cursor-pointer border text-[1.15rem]/[1.15rem] select-none font-bold
+						bg-zinc-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700'>
+						<span className="flex gap-1 items-center justify-center content-center">
+							<span className="text-sm">new</span>
+							<i className="fa-solid fa-feather-pointed"></i>
+						</span>
 				</button>
 			</Drawer.Trigger>
 			<Drawer.Portal>
