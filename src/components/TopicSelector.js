@@ -88,7 +88,7 @@ const TopicSelector = ({ selectedTopic, setSelectedTopic }) => {
 	return (
 		<div
 			id='topics'
-			className='p-4 pt-2 border-b border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-900 flex items-center sticky top-0'>
+			className='z-10 p-4 pt-2 border-b border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-900 flex items-center sticky top-0'>
 			<div className='h-full w-full'>
 				<div id='topicsTop' className='overflow-hidden transition-all ease-in-out duration-[575ms] max-h-0 opacity-0'>
 					<span className='pb-2 pt-1 w-full h-full flex items-center'>
