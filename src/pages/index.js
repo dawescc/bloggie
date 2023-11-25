@@ -27,9 +27,10 @@ function Home() {
 		<div vaul-drawer-wrapper="" className='flex bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-white h-full w-full'>
 			<div className='md:flex-grow h-full'></div>
 
-			<div  className='w-full h-full md:w-3/4 lg:w-1/2 flex flex-col md:shadow-lg border-zinc-200 dark:border-zinc-700'>
+			<div className='w-full h-full md:w-3/4 lg:w-1/2 flex flex-col md:shadow-lg border-zinc-200 dark:border-zinc-700'>
 				
 				<Toaster position="top-right" richColors closeButton />
+
 				<div id='topcap' className='h-auto border-b border-zinc-200 dark:border-zinc-700'>
 					<TopCap session={session} />
 				</div>

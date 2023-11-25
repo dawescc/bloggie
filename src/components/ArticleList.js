@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import Loader from "./Loader";
 
-import DeleteButton from "./DeleteButton";
-import PinButton from "./PinButton";
+
+import { AdminMenu } from "./AdminMenu";
 
 const ArticleList = ({ selectedTopic, setSelectedTopic, session, onReplyClick }) => {
 	const [articles, setArticles] = useState([]);
@@ -77,10 +77,9 @@ const ArticleList = ({ selectedTopic, setSelectedTopic, session, onReplyClick })
 			className='pt-2'>
 			<ul className='w-full h-full'>
 				{articles.map((article) => (
-					<li
-						key={article.id}
-						id={article.id}
+					<li key={article.id} id={article.id}
 						className='py-8 px-4 flex flex-col gap-4 border-b border-zinc-300 dark:border-zinc-700'>
+
 						{/* Article content */}
 						<span className='p-2 gap-4 flex flex-col'>
 							<span className='text-[0.9rem]/[1.2rem] font-medium'>{article.content}</span>
@@ -93,6 +92,7 @@ const ArticleList = ({ selectedTopic, setSelectedTopic, session, onReplyClick })
 								</div>
 							)}
 						</span>
+
 						{/* Article Reply Content */}
 						{article.replyContent && (
 							<span className='text-zinc-400 text-xs py-2 px-3 mx-2 rounded-md border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 flex flex-col gap-1'>
@@ -120,6 +120,7 @@ const ArticleList = ({ selectedTopic, setSelectedTopic, session, onReplyClick })
 								<span className='text-[0.55rem]'>{moment(article.replyContent.created_at).fromNow()}</span>
 							</span>
 						)}
+
 						{/* Custom Date Format & Display topic */}
 						<span className='flex items-center align-middle text-xs text-zinc-500 dark:text-zinc-500'>
 							<span className='pl-2'>
@@ -149,17 +150,12 @@ const ArticleList = ({ selectedTopic, setSelectedTopic, session, onReplyClick })
 						{/* If session, show reply button */}
 						{session && (
 							<span className='flex gap-6 mt-2 ml-2'>
-								<span
-									className='px-2 text-sm flex items-center justify-center content-center text-zinc-700 dark:text-zinc-300 cursor-pointer rounded-lg shadow-sm border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 hover:bg-opacity-50'
-									onClick={() => onReplyClick(article.id)}>
-									<i className='fa-solid fa-reply'></i>
-								</span>
-							
-								<DeleteButton ArticleID = {article.id} />
 
-								{!article.pinned && (
-									<PinButton ArticleID = {article.id}  />
-								)}
+
+
+								<AdminMenu onReplyClick={onReplyClick} ArticleID={article.id}
+								 bool={article.pinned ? 'false' : 'true'} />
+
 							</span>
 						)}
 					</li>

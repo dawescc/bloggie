@@ -1,45 +1,52 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
-import { Toaster, toast } from 'sonner';
+import { Toaster, toast } from "sonner";
 
-const PinButton = ({ ArticleID }) => {
-    const [session, setSession] = useState(null);
-    useEffect(() => {
-        setSession(supabase.auth.getSession());
+const PinButton = ({ ArticleID, bool }) => {
+	const [session, setSession] = useState(null);
+	useEffect(() => {
+		setSession(supabase.auth.getSession());
 
-        supabase.auth.onAuthStateChange((_event, session) => {
-            setSession(session);
-        });
-    }, []);
+		supabase.auth.onAuthStateChange((_event, session) => {
+			setSession(session);
+		});
+	}, []);
 
-    const pinArticle = async (ArticleID) => {
-        const { error } = await supabase.from("articles").update({ pinned: true }).eq("id", ArticleID);
-        if (error) {
-            console.error("Error updating post:", error);
-            toast.error('Error!', {
-                description: `Unable to pin ${ArticleID}.`,
-            });
-        } else {
-            toast.success('Success!', {
-                description: `Pinned ${ArticleID}.`,
-            });
-        }
-    };
+	const pinArticle = async (ArticleID, bool) => {
+		try {
+			const action = bool === 'true' ? "pinned" : "unpinned";
+			const { error } = await supabase.from("articles").update({ pinned: bool === 'true' }).eq("id", ArticleID);
+			if (!error) {
+				toast.success("Success!", {
+					icon: <i className='fa-solid fa-thumbs-up'></i>,
+					description: `Article ${ArticleID} successfully ${action}.`,
+				});
+			} else {
+				throw error;
+			}
+		} catch (error) {
+			toast.error("Error!", {
+				icon: <i className='fa-solid fa-error'></i>,
+				description: `Error ${action === 'pinned' ? 'pinning' : 'unpinning'} article ${ArticleID}.`,
+			});
+		}
+	};
+	
+	
+	const handlePin = async (ArticleID, bool) => {
+		if (window.confirm(`Are you sure?`)) {
+			await pinArticle(ArticleID, bool);
+		}
+	};
+	
 
-    const handlePin = async (ArticleID) => {
-        const result = await pinArticle(ArticleID);
-        return null;
-    };
-
-    return (
-        <span className='px-2 text-sm flex items-center justify-center content-center text-zinc-700 dark:text-zinc-300 cursor-pointer rounded-lg shadow-sm border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 hover:bg-opacity-50'>
-            <span
-                className=''
-                onClick={() => handlePin(ArticleID)}>
-                <i className='fa-solid fa-thumbtack'></i>
-            </span>
-        </span>
-    );
+	return (
+		<span
+			className='py-1 flex items-center justify-center content-center cursor-pointer hover:bg-white hover:bg-opacity-20'
+			onClick={() => handlePin(ArticleID, bool)}>
+			{bool === 'true' ? <i className='fa-solid fa-thumbtack'></i> : <i className="fa-solid fa-circle-minus"></i>}
+		</span>
+	);
 };
 
 export default PinButton;
