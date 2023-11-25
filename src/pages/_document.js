@@ -5,7 +5,7 @@ export default function Document() {
     <Html lang="en">
       <meta name="apple-mobile-web-app-capable" content='yes'></meta>
       <Head />
-      <body className='bg-white dark:bg-black h-screen w-screen'>
+      <body className='bg-white dark:bg-black h-screen w-full'>
         <Main />
         <NextScript />
       </body>
