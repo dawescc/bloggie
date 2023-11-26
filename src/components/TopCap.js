@@ -7,9 +7,9 @@ const TopCap = ({session}) => {
     };
 
 	return (
-		<div className='flex px-5 py-3 items-center bg-white dark:bg-zinc-900'>
+		<div className='flex px-5 py-3 items-center'>
 			<p className='text-[1.2rem]/[1.2rem] font-bold dark:text-gray-200 text-gray-700 py-1'>
-				<span className=''>ryan dawes</span>
+				<span className=''></span>
 			</p>
 
             <div className='flex-grow'></div>

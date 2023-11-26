@@ -24,14 +24,12 @@ function Home() {
 	};
 
 	return (
-		<div vaul-drawer-wrapper="" className='flex bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-white h-full w-full'>
-			<div className='md:flex-grow h-full'></div>
-
-			<div className='w-full h-full md:w-3/4 lg:w-1/2 flex flex-col md:shadow-lg border-zinc-200 dark:border-zinc-700'>
+		<div vaul-drawer-wrapper="" className='flex flex-col items-center bg-zinc-50 dark:bg-zinc-900 text-zinc-600 dark:text-white'>
+			<div className='w-full h-full md:w-3/4 lg:w-1/2 flex flex-col px-2 dm:px-0'>
 				
 				<Toaster position="top-right" richColors closeButton />
 
-				<div id='topcap' className='h-auto border-b border-zinc-200 dark:border-zinc-700'>
+				<div id='topcap' className='h-auto'>
 					<TopCap session={session} />
 				</div>
 
@@ -50,16 +48,14 @@ function Home() {
 
 				<div
 					id='botcap'
-					className='h-auto'>
+					className='h-auto mt-4'>
 					<MadeWithLove />
 				</div>
 
-				<div id='Footer' className="h-auto border-t border-zinc-300 dark:border-zinc-700 bg-zinc-200 dark:bg-zinc-800">
+			</div>
+				<div id='Footer' className="h-auto self-stretch border-t border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800">
 					<Footer />
 				</div>
-			</div>
-
-			<div className='md:flex-grow h-full'></div>
 		</div>
 	);
 }

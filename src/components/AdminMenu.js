@@ -7,7 +7,7 @@ import ReplyButton from "./ReplyButton";
 
 export const AdminMenu = ({ ArticleID, bool, onReplyClick }) => {
 	return (
-		<span className='absolute top-0 right-0 mt-5 mr-3'>
+		<span className='absolute top-0 right-0 origin-top-right m-2'>
 			<Menu
 				as='div'
 				className='relative'>
@@ -29,11 +29,11 @@ export const AdminMenu = ({ ArticleID, bool, onReplyClick }) => {
 					<Menu.Items
 						className='absolute z-10 flex flex-col right-0 mt-2 origin-top-right
                                        divide-y divide-zinc-300 dark:divide-zinc-700
-                                       rounded-md shadow-lg focus:outline-none
-                                       bg-zinc-200 dark:bg-zinc-800
+                                       rounded-md shadow-md focus:outline-none
+                                       bg-zinc-100 dark:bg-zinc-800
                                        border border-zinc-300 dark:border-zinc-700'>
 						<Menu.Item>
-							<span>
+							<span className="">
 								<ReplyButton
 									ArticleID={ArticleID}
 									onReplyClick={onReplyClick}
@@ -41,12 +41,12 @@ export const AdminMenu = ({ ArticleID, bool, onReplyClick }) => {
 							</span>
 						</Menu.Item>
 						<Menu.Item>
-							<span>
+							<span className="">
 								<DeleteButton ArticleID={ArticleID} />
 							</span>
 						</Menu.Item>
 						<Menu.Item>
-							<span>
+							<span className="">
 								<PinButton
 									ArticleID={ArticleID}
 									bool={bool}

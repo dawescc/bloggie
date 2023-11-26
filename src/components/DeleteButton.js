@@ -33,13 +33,13 @@ const DeleteButton = ({ ArticleID }) => {
 	};
 
 	return (
-		<span className='py-1 px-2 flex items-center justify-center content-center cursor-pointer hover:bg-white hover:bg-opacity-20'>
+		<div className='py-1 px-2 cursor-pointer hover:bg-white hover:bg-opacity-20'>
 			<span
-				className=''
+				className='flex items-center justify-center content-center'
 				onClick={() => handleDelete(ArticleID)}>
-				<i className='fa-solid fa-trash-can'></i>
+				<i className='fa-solid fa-trash-can'></i>&nbsp;Delete
 			</span>
-		</span>
+		</div>
 	);
 };
 

@@ -1,32 +1,23 @@
 const Profile = ({ props }) => {
 	return (
-		<div className='w-full h-52 flex overflow-hidden
-						border-b border-zinc-200 dark:border-zinc-700
-						bg-gradient-to-r from-indigo-200 via-red-200 to-yellow-100'>
+		<div className='w-full overflow-hidden'>
+			<div className='w-full h-full flex flex-col py-6 gap-8 font-medium'>
+				<span className='text-4xl'>ryan</span>
+				<span className='text-2xl'>football fan + developer</span>
+				<span className='flex flex-col gap-2 max-w-min text-sm text-sky-400 font-normal'>
+					<a
+						href='https://dawes.cc'
+						className='hover:underline flex items-center justify-start content-center whitespace-nowrap'>
+						visit my website&nbsp;&nbsp;<i className="fa-solid fa-arrow-right-long m-0 p-0"></i>
+					</a>
 
-			<div className="w-full h-full flex pt-10 px-6 gap-2">
-				<div className="flex-grow"></div>
-				<div className='h-full flex flex-col gap-4 text-zinc-950'>
-					<span className='font-bold text-2xl'>ryan</span>
-					<span className='text-lg whitespace-nowrap'>football fan + developer</span>
-					<span className='w-full flex gap-4 items-center content-center flex-wrap text-xs'>
-						<a
-							href='https://dawes.cc'
-							className='underline'>
-							website
-						</a>
-
-						<a
-							href='https://github.com/dawescc'
-							className='underline'>
-							github
-						</a>
-					</span>
-				</div>
-				<img src="images/ryan.svg" className="w-1/3 h-full translate-y-2"/>
-				<div className="flex-grow"></div>
+					<a
+						href='https://github.com/dawescc'
+						className='hover:underline flex items-center justify-start content-center whitespace-nowrap'>
+						visit my github&nbsp;&nbsp;<i className="fa-solid fa-arrow-right-long m-0 p-0"></i>
+					</a>
+				</span>
 			</div>
-
 		</div>
 	);
 };

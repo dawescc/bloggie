@@ -41,11 +41,11 @@ const PinButton = ({ ArticleID, bool }) => {
 	
 
 	return (
-		<span
-			className='py-1 px-2 flex items-center justify-center content-center cursor-pointer hover:bg-white hover:bg-opacity-20'
+		<div
+			className='py-1 px-2 cursor-pointer hover:bg-white hover:bg-opacity-20'
 			onClick={() => handlePin(ArticleID, bool)}>
-			{bool === 'true' ? <i className='fa-solid fa-thumbtack'></i> : <i className="fa-solid fa-circle-minus"></i>}
-		</span>
+			{bool === 'true' ? <span className="flex items-center justify-center content-center"><i className='fa-solid fa-thumbtack'></i>&nbsp;Pin</span> : <span className="flex items-center justify-center content-center"><i className='fa-solid fa-circle-minus'></i>&nbsp;Unpin</span>}
+		</div>
 	);
 };
 
