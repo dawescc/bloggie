@@ -116,7 +116,7 @@ const ArticleList = ({ selectedTopic, setSelectedTopic, session, onReplyClick })
 		<div
 			id='articles'
 			className='pt-2'>
-			<ul className='w-full h-full flex flex-col gap-8 px-2'>
+			<ul className='w-full h-full flex flex-col gap-8 px-2 pt-6'>
 				{articles.map((article) => (
 					<li
 						key={article.id}
@@ -125,7 +125,7 @@ const ArticleList = ({ selectedTopic, setSelectedTopic, session, onReplyClick })
 						<div className='flex flex-col gap-4 w-full'>
 							{/* Article content */}
 							<span className={`py-2 gap-4 flex flex-col ${session ? "pr-4" : ""} break-words hyphens-auto`}>
-								<span className='text-[0.85rem]/[1.75rem] font-medium'>{article.content}</span>
+								<span className='text-[0.95rem]/[1.75rem] font-medium'>{article.content}</span>
 								{article.image_url && (
 									<div className='rounded-lg overflow-hidden w-full h-auto transition-all duration-700 ease-in-out border-zinc-200 dark:border-zinc-700 border'>
 										<img

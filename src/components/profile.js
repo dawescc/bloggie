@@ -1,10 +1,10 @@
 const Profile = ({ props }) => {
 	return (
 		<div className='w-full overflow-hidden'>
-			<div className='w-full h-full flex flex-col py-6 gap-8 font-medium'>
+			<div className='w-full h-full flex flex-col py-6 px-4 gap-6 font-medium'>
 				<span className='text-4xl'>ryan</span>
-				<span className='text-2xl'>football fan + developer</span>
-				<span className='flex flex-col gap-2 max-w-min text-sm text-sky-400 font-normal'>
+				<span className='text-xl line'>i'm passionate about football and developing .</span>
+				<span className='flex flex-col gap-2 max-w-min text-xs text-sky-400 font-normal'>
 					<a
 						href='https://dawes.cc'
 						className='hover:underline flex items-center justify-start content-center whitespace-nowrap'>
