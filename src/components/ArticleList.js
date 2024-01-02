@@ -72,7 +72,7 @@ const ArticleList = ({ selectedTopic, setSelectedTopic, session, onReplyClick })
 
 	const PinnedBadge = ({ onClick }) => {
 		return (
-			<span className='mr-auto text-xs mt-2'>
+			<span className='text-xs'>
 				<div
 					onClick={() => onClick}
 					className='cursor-pointer hover:underline items-center content-center justify-center flex gap-1'>
@@ -85,28 +85,18 @@ const ArticleList = ({ selectedTopic, setSelectedTopic, session, onReplyClick })
 
 	const ReplyContent = ({ onClick, article }) => {
 		return (
-<span className='text-zinc-400 text-xs py-2 px-3 rounded-md border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 flex flex-col gap-2'>
-									<span className='flex flex-col gap-2'>
-										{article.replyContent.pinned && (
-											<span className='mr-auto text-[0.75rem]/[1rem] text-zinc-500 dark:text-zinc-500 pt-1'>
-												<span
-													onClick={() => setSelectedTopic("pinned")}
-													className='cursor-pointer flex justify-center items-center content-center py-[0.125rem] gap-1 px-1 border border-zinc-200 dark:border-zinc-700 rounded-md'>
-													<i className='fa-solid fa-star '></i>
-													<span>featured</span>
-												</span>
-											</span>
-										)}
-							<span className='font-semibold'>{article.replyContent.content}</span>
-							{article.replyContent.image_url && (
-							<div className='rounded-lg overflow-hidden w-full h-auto transition-all duration-700 ease-in-out border border-zinc-200 dark:border-zinc-700'>
-								<img
-									className='object-cover w-full h-auto'
-									src={article.replyContent.image_url}
-								/>
-							</div>
-						)}
-					</span>
+			<span className='text-zinc-400 text-xs p-4 rounded-md bg-zinc-200/30 dark:bg-zinc-800/40 flex flex-col gap-2'>
+				<span className='flex flex-col gap-2'>
+					<span className='font-semibold'>{article.replyContent.content}</span>
+					{article.replyContent.image_url && (
+						<div className='rounded-lg overflow-hidden w-full h-auto transition-all duration-700 ease-in-out border border-zinc-200 dark:border-zinc-700'>
+							<img
+								className='object-cover w-full h-auto'
+								src={article.replyContent.image_url}
+							/>
+						</div>
+					)}
+				</span>
 				<span className='text-[0.55rem]'>{moment(article.replyContent.created_at).fromNow()}</span>
 			</span>
 		);
@@ -116,13 +106,18 @@ const ArticleList = ({ selectedTopic, setSelectedTopic, session, onReplyClick })
 		<div
 			id='articles'
 			className='pt-2'>
-			<ul className='w-full h-full flex flex-col gap-8 px-2 pt-6'>
+			<ul className='w-full h-full flex flex-col gap-4 px-2 pt-4'>
 				{articles.map((article) => (
 					<li
 						key={article.id}
 						id={article.id}
-						className={`pt-8 pb-4 px-4 relative rounded-xl border border-zinc-300 dark:border-zinc-700`}>
+						className={`pt-8 pb-4 px-4 relative rounded-md border border-zinc-300/40 dark:border-zinc-700/40 shadow-sm`}>
 						<div className='flex flex-col gap-4 w-full'>
+							{/* Article date */}
+							<span className='text-xs text-zinc-500 dark:text-zinc-500 uppercase mr-auto'>
+								{moment(article.created_at).format("MMM DD YYYY")}
+							</span>
+
 							{/* Article content */}
 							<span className={`py-2 gap-4 flex flex-col ${session ? "pr-4" : ""} break-words hyphens-auto`}>
 								<span className='text-[0.95rem]/[1.75rem] font-medium'>{article.content}</span>
@@ -138,27 +133,25 @@ const ArticleList = ({ selectedTopic, setSelectedTopic, session, onReplyClick })
 
 							{/* Article Reply Content */}
 							{article.replyContent && (
-								<ReplyContent onClick={() => setSelectedTopic("pinned")} article={article} />
+								<ReplyContent
+									onClick={() => setSelectedTopic("pinned")}
+									article={article}
+								/>
 							)}
 
-							{/* Custom Date Format & Display topic */}
-							<div className='flex items-center align-middle text-xs text-zinc-500 dark:text-zinc-500'>
-								<span className=''>
-									{moment(article.created_at).format("YYYY-MM-DD hh:mm:ss A ")}({moment(article.created_at).fromNow()})
-								</span>
+							<span className='flex gap-6 mr-auto items-center content-center'>
+								{/* If pinned, show badge */}
+								{article.pinned && selectedTopic !== "pinned" && <PinnedBadge onClick={() => setSelectedTopic("pinned")} />}
+
+								{/* Article topic */}
 								{article.topic && (
 									<span
 										onClick={() => setSelectedTopic(article.topic)}
-										className='pl-2 cursor-pointer hover:underline'>
+										className='text-xs text-zinc-500 dark:text-zinc-500 capitalize cursor-pointer hover:underline'>
 										#{article.topic}
 									</span>
 								)}
-							</div>
-
-							{/* If pinned, show badge */}
-							{article.pinned && (
-								<PinnedBadge onClick={() => setSelectedTopic("pinned")} />
-							)}
+							</span>
 
 							{/* If session, show admin button */}
 							{session && (

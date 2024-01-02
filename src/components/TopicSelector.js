@@ -127,8 +127,7 @@ const TopicSelector = ({ selectedTopic, setSelectedTopic }) => {
 					</span>
 				</div>
 
-				<p className='text-sm'>Topics</p>
-				<div className='flex flex-wrap gap-2 mt-4 text-[0.85rem]/[1.15rem] font-semibold '>
+				<div className='flex flex-wrap gap-2 mt-4 text-[0.85rem]/[1.15rem] font-semibold capitalize '>
 					<TopicButton
 						topic='pinned'
 						onClick={() => setSelectedTopic("pinned")}
