@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { format } from "date-fns";
+import { PostDrawer } from "./PostDrawer";
+import { createClient } from "@/utils/supabase/client";
 
 interface Article {
 	id: string;
@@ -22,12 +24,28 @@ export default function Feed({ data }: FeedProps) {
 	const [articles, setArticles] = useState<Article[]>([]);
 	const [searchTerm, setSearchTerm] = useState<string>("");
 	const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+	const [user, setUser] = useState<any>(null);
 
 	useEffect(() => {
 		if (Array.isArray(data)) {
 			setArticles(data);
 		}
 	}, [data]);
+
+	useEffect(() => {
+		const fetchUser = async () => {
+			const supabase = createClient();
+			try {
+				const { data, error } = await supabase.auth.getUser();
+				if (error) throw error;
+				setUser(data);
+			} catch (error) {
+				console.error("Unable to load user from database", error);
+			}
+		};
+
+		fetchUser();
+	}, []);
 
 	const filteredArticles = useMemo(() => {
 		return articles.filter(
@@ -57,6 +75,12 @@ export default function Feed({ data }: FeedProps) {
 					onClick={() => handleTopicClick(article.topic)}>
 					{article.topic}
 				</span>
+				{user && (
+					<PostDrawer
+						title='reply'
+						replyID={article.id}
+					/>
+				)}
 			</div>
 		);
 	}, []);
