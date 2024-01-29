@@ -34,8 +34,8 @@ export default function Feed({ data }: FeedProps) {
 
 	useEffect(() => {
 		const fetchUser = async () => {
-			const supabase = createClient();
 			try {
+				const supabase = createClient();
 				const { data, error } = await supabase.auth.getUser();
 				if (error) throw error;
 				setUser(data);
@@ -57,33 +57,36 @@ export default function Feed({ data }: FeedProps) {
 		setSelectedTopic(topic);
 	}, []);
 
-	const renderArticle = useCallback((article: Article) => {
-		return (
-			<div
-				key={article.id}
-				className='p-3 flex flex-col gap-4 rounded-md no-underline bg-neutral-200/30 dark:bg-neutral-700/30 last-of-type:mb-6'>
-				<span className='text-xs font-semibold text-foreground/40'>{format(article.created_at, "MMM dd, yyyy")}</span>
-				<span className='text-lg font-bold leading-7'>{article.content}</span>
-				{article.reply_to && (
-					<span className='text-sm font-light py-1 my-2 text-foreground/40 border-l-4 border-neutral-900/20 dark:border-neutral-100/20 pl-4 flex flex-col gap-2'>
-						{article.reply_to_content}
-						<span className='text-xs'>{format(article.reply_to_created_at!, "MMM dd, yyyy")}</span>
+	const renderArticle = useCallback(
+		(article: Article) => {
+			return (
+				<div
+					key={article.id}
+					className='p-3 flex flex-col gap-4 rounded-md no-underline bg-neutral-200/30 dark:bg-neutral-700/30 last-of-type:mb-6'>
+					<span className='text-xs font-semibold text-foreground/40'>{format(article.created_at, "MMM dd, yyyy")}</span>
+					<span className='text-lg font-bold leading-7'>{article.content}</span>
+					{article.reply_to && (
+						<span className='text-sm font-light py-1 my-2 text-foreground/40 border-l-4 border-neutral-900/20 dark:border-neutral-100/20 pl-4 flex flex-col gap-2'>
+							{article.reply_to_content}
+							<span className='text-xs'>{format(article.reply_to_created_at!, "MMM dd, yyyy")}</span>
+						</span>
+					)}
+					<span
+						className='animate-in text-xs mr-auto py-2 text-foreground/50 underline'
+						onClick={() => handleTopicClick(article.topic)}>
+						{article.topic}
 					</span>
-				)}
-				<span
-					className='animate-in text-xs mr-auto py-2 text-foreground/50 underline'
-					onClick={() => handleTopicClick(article.topic)}>
-					{article.topic}
-				</span>
-				{user && (
-					<PostDrawer
-						title='reply'
-						replyID={article.id}
-					/>
-				)}
-			</div>
-		);
-	}, []);
+					{user && (
+						<PostDrawer
+							title='reply'
+							replyID={article.id}
+						/>
+					)}
+				</div>
+			);
+		},
+		[user]
+	);
 
 	return (
 		<div className='w-full h-full overflow-hidden flex flex-col gap-8'>
