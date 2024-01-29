@@ -77,10 +77,12 @@ export default function Feed({ data }: FeedProps) {
 						{article.topic}
 					</span>
 					{user && (
-						<PostDrawer
-							title='reply'
-							replyID={article.id}
-						/>
+						<span className='bg-neutral-600/20 rounded-md dark:text-neutral-100 inline-flex items-center justify-center *:w-full py-1'>
+							<PostDrawer
+								title='reply'
+								replyID={article.id}
+							/>
+						</span>
 					)}
 				</div>
 			);

@@ -62,7 +62,7 @@ export function PostDrawer({ replyID, title }: PostDrawerProps) {
 	return (
 		<Drawer.Root direction='right'>
 			<Drawer.Trigger asChild>
-				<button className='hover:underline px-4 py-2.5 text-sm font-semibold'>{title}</button>
+				<span className='inline-flex items-center justify-center cursor-pointer'>{title}</span>
 			</Drawer.Trigger>
 			<Drawer.Portal>
 				<Drawer.Overlay className='fixed inset-0 bg-black/40' />
