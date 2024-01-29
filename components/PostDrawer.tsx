@@ -11,16 +11,22 @@ type FormData = {
 	reply_to?: string;
 };
 
-export function PostDrawer() {
-	const [formData, setFormData] = useState<FormData>({ content: "", topic: "" });
+type PostDrawerProps = {
+	title: string;
+	replyID?: string;
+};
 
+export function PostDrawer({ replyID, title }: PostDrawerProps) {
+	const [formData, setFormData] = useState<FormData>({
+		content: "",
+		topic: "",
+		reply_to: replyID,
+	});
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
-
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-
 		if (!formData.content.trim()) {
 			alert("Content is required.");
 			return;
@@ -56,7 +62,7 @@ export function PostDrawer() {
 	return (
 		<Drawer.Root direction='right'>
 			<Drawer.Trigger asChild>
-				<button className='hover:underline px-4 py-2.5 text-sm font-semibold'>New Post</button>
+				<button className='hover:underline px-4 py-2.5 text-sm font-semibold'>{title}</button>
 			</Drawer.Trigger>
 			<Drawer.Portal>
 				<Drawer.Overlay className='fixed inset-0 bg-black/40' />
@@ -110,21 +116,6 @@ export function PostDrawer() {
 										name='image_url'
 										className='text-black mt-1 block w-full p-2 border border-neutral-300 rounded-md shadow-sm focus:outline-none focus:ring-neutral-500 focus:border-neutral-500'
 										value={formData.image_url || ""}
-										onChange={handleChange}
-									/>
-								</div>
-								<div>
-									<label
-										htmlFor='reply_to'
-										className='block text-sm font-medium text-neutral-700 dark:text-neutral-200'>
-										Reply To (Optional)
-									</label>
-									<input
-										type='text'
-										id='reply_to'
-										name='reply_to'
-										className='text-black mt-1 block w-full p-2 border border-neutral-300 rounded-md shadow-sm focus:outline-none focus:ring-neutral-500 focus:border-neutral-500'
-										value={formData.reply_to || ""}
 										onChange={handleChange}
 									/>
 								</div>

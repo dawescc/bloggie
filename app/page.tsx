@@ -16,7 +16,7 @@ export default async function Index() {
 		<div className='w-full max-w-7xl mx-auto px-1 md:px-0 h-full flex flex-col items-center'>
 			{data.user ? (
 				<span className='inline-flex gap-10'>
-					<PostDrawer />
+					<PostDrawer title='New Post' />
 					<AuthButton />
 				</span>
 			) : null}
