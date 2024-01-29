@@ -9,6 +9,7 @@ interface Article {
 	id: string;
 	created_at: Date;
 	content: string;
+	image_url: string;
 	reply_to?: string;
 	reply_to_content?: string;
 	reply_to_topic?: string;
@@ -57,6 +58,17 @@ export default function Feed({ data }: FeedProps) {
 		setSelectedTopic(topic);
 	}, []);
 
+	const fetchArticles = async () => {
+		try {
+			const supabase = createClient();
+			const { data: fetchedArticles, error } = await supabase.from("articles_dev_replies").select("*");
+			if (error) throw error;
+			setArticles(fetchedArticles);
+		} catch (error) {
+			console.error("Unable to fetch articles", error);
+		}
+	};
+
 	async function deleteArticle(id: string) {
 		try {
 			const supabase = createClient();
@@ -68,6 +80,7 @@ export default function Feed({ data }: FeedProps) {
 	}
 	const handleDeleteClick = useCallback((id: string) => {
 		deleteArticle(id);
+		fetchArticles();
 	}, []);
 
 	const renderArticle = useCallback(
@@ -77,6 +90,15 @@ export default function Feed({ data }: FeedProps) {
 					key={article.id}
 					className='p-3 flex flex-col gap-4 rounded-md no-underline bg-neutral-200/30 dark:bg-neutral-700/30 last-of-type:mb-6'>
 					<span className='text-xs font-semibold text-foreground/40'>{format(article.created_at, "MMM dd, yyyy")}</span>
+					{article.image_url && (
+						<div className='w-full h-auto max-w-md mx-auto rounded-lg overflow-hidden'>
+							<img
+								className='w-full object-cover rounded-lg'
+								src={article.image_url}
+								alt={"Post Image"}
+							/>
+						</div>
+					)}
 					<span className='text-lg font-bold leading-7'>{article.content}</span>
 					{article.reply_to && (
 						<span className='text-sm font-light py-1 my-2 text-foreground/40 border-l-4 border-neutral-900/20 dark:border-neutral-100/20 pl-4 flex flex-col gap-2'>
