@@ -57,6 +57,19 @@ export default function Feed({ data }: FeedProps) {
 		setSelectedTopic(topic);
 	}, []);
 
+	async function deleteArticle(id: string) {
+		try {
+			const supabase = createClient();
+			const { error } = await supabase.from("articles").delete().eq("id", id);
+			if (error) throw error;
+		} catch (error) {
+			console.error("Unable to delete article", error);
+		}
+	}
+	const handleDeleteClick = useCallback((id: string) => {
+		deleteArticle(id);
+	}, []);
+
 	const renderArticle = useCallback(
 		(article: Article) => {
 			return (
@@ -77,11 +90,12 @@ export default function Feed({ data }: FeedProps) {
 						{article.topic}
 					</span>
 					{user && (
-						<span className='bg-neutral-600/20 rounded-md dark:text-neutral-100 inline-flex items-center justify-center *:w-full py-1'>
+						<span className='bg-neutral-600/20 rounded-md dark:text-neutral-100 inline-flex gap-6 items-center justify-center *:w-full py-1'>
 							<PostDrawer
-								title='reply'
+								title='Reply'
 								replyID={article.id}
 							/>
+							<button onClick={() => handleDeleteClick(article.id)}>Delete</button>
 						</span>
 					)}
 				</div>
