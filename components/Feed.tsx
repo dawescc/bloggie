@@ -58,17 +58,6 @@ export default function Feed({ data }: FeedProps) {
 		setSelectedTopic(topic);
 	}, []);
 
-	const fetchArticles = async () => {
-		try {
-			const supabase = createClient();
-			const { data: fetchedArticles, error } = await supabase.from("articles_dev_replies").select("*");
-			if (error) throw error;
-			setArticles(fetchedArticles);
-		} catch (error) {
-			console.error("Unable to fetch articles", error);
-		}
-	};
-
 	async function deleteArticle(id: string) {
 		try {
 			const supabase = createClient();
@@ -80,7 +69,6 @@ export default function Feed({ data }: FeedProps) {
 	}
 	const handleDeleteClick = useCallback((id: string) => {
 		deleteArticle(id);
-		fetchArticles();
 	}, []);
 
 	const renderArticle = useCallback(

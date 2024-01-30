@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Drawer } from "vaul";
 import { createClient } from "@/utils/supabase/client";
 
@@ -22,38 +22,68 @@ export function PostDrawer({ replyID, title }: PostDrawerProps) {
 		topic: "",
 		reply_to: replyID,
 	});
+	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+	const fileInputRef = useRef<HTMLInputElement>(null);
+	const triggerFileInput = () => {
+		fileInputRef.current?.click();
+	};
+
+	async function uploadFile(file: File): Promise<string | null> {
+		const supabase = createClient();
+		const filePath = `uploads/${file.name}`;
+		const { data, error } = await supabase.storage.from("images").upload(filePath, file);
+
+		if (error) {
+			console.error(error);
+			return null;
+		}
+
+		const fullUrl = supabase.storage.from("images").getPublicUrl(data.path).data.publicUrl;
+		return fullUrl;
+	}
+
+	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files && e.target.files[0]) {
+			setSelectedFile(e.target.files[0]);
+		}
+	};
+
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		if (!formData.content.trim()) {
-			alert("Content is required.");
+
+		let imageUrl = null;
+
+		if (selectedFile) {
+			const uploadedUrl = await uploadFile(selectedFile);
+			if (uploadedUrl) {
+				imageUrl = uploadedUrl;
+			}
+		}
+
+		if (!formData.content.trim() || !formData.topic.trim()) {
+			alert("Content and Topic are required.");
 			return;
 		}
 
-		if (!formData.topic.trim()) {
-			alert("Topic is required.");
-			return;
-		}
 		try {
 			const supabase = createClient();
-			const { data, error } = await supabase
-				.from("articles") // Adjust the table name as needed
-				.insert([
-					{
-						content: formData.content,
-						topic: formData.topic,
-						image_url: formData.image_url,
-						reply_to: formData.reply_to,
-					},
-				]);
+			const { data, error } = await supabase.from("articles").insert([
+				{
+					content: formData.content,
+					topic: formData.topic,
+					image_url: imageUrl,
+					reply_to: formData.reply_to,
+				},
+			]);
 
 			if (error) throw error;
 
-			// Handle successful submission
-			console.log("Form submitted successfully:", data);
 			setFormData({ content: "", topic: "", image_url: "", reply_to: "" }); // Reset form
+			setSelectedFile(null); // Reset selected file
 		} catch (error) {
 			console.error("Error submitting form:", error);
 		}
@@ -105,19 +135,28 @@ export function PostDrawer({ replyID, title }: PostDrawerProps) {
 									/>
 								</div>
 								<div>
-									<label
-										htmlFor='image_url'
-										className='block text-sm font-medium text-neutral-700 dark:text-neutral-200'>
-										Image URL (Optional)
+									<label className='w-full flex flex-col items-center justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-neutral-600/50 hover:bg-neutral-700/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500'>
+										<button
+											type='button'
+											onClick={triggerFileInput}>
+											(Optional) Upload Image
+										</button>
+										{selectedFile && (
+											<span className='inline-flex max-w-3/4 truncate items-center rounded-md bg-neutral-300 dark:bg-neutral-600 px-2 py-1 text-xs font-medium text-neutral-600 dark:text-neutral-200 ring-1 ring-inset ring-neutral-500/10 dark:ring-neutral-400/10'>
+												{selectedFile.name}
+											</span>
+										)}
 									</label>
 									<input
-										type='text'
-										id='image_url'
-										name='image_url'
-										className='text-black mt-1 block w-full p-2 border border-neutral-300 rounded-md shadow-sm focus:outline-none focus:ring-neutral-500 focus:border-neutral-500'
-										value={formData.image_url || ""}
-										onChange={handleChange}
+										ref={fileInputRef}
+										type='file'
+										id='file'
+										name='file'
+										accept='.jpeg, .jpg, .png, .webp, .heic'
+										onChange={handleFileChange}
+										className='hidden' // Hide the actual input
 									/>
+									{/* Display selected file name (if any) */}
 								</div>
 								<button
 									type='submit'
