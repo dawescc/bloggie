@@ -17,8 +17,8 @@ async function getData() {
 export default async function Content() {
 	const articles = await getData();
 	return (
-		<div className='w-full flex h-full items-center overflow-hidden'>
-			<div className='w-full h-full overflow-auto bg-neutral-50 dark:bg-neutral-900 rounded-t-xl p-2 pt-4'>
+		<div className='w-full flex h-full items-center'>
+			<div className='w-full h-full p-2 pt-4'>
 				<Feed data={articles ?? []} />
 			</div>
 		</div>

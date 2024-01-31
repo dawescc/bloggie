@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { Drawer } from "vaul";
 import { createClient } from "@/utils/supabase/client";
 import { toast } from "sonner";
+import { BadgeX } from "lucide-react";
 
 type FormData = {
 	content: string;
@@ -15,9 +16,10 @@ type FormData = {
 type PostDrawerProps = {
 	title: string;
 	replyID?: string;
+	children: React.ReactNode;
 };
 
-export function PostDrawer({ replyID, title }: PostDrawerProps) {
+export function PostDrawer({ replyID, title, children }: PostDrawerProps) {
 	const [open, setOpen] = useState(false);
 	const [formData, setFormData] = useState<FormData>({
 		content: "",
@@ -129,12 +131,12 @@ export function PostDrawer({ replyID, title }: PostDrawerProps) {
 			<Drawer.Trigger
 				asChild
 				onClick={() => setOpen(true)}>
-				<span className='inline-flex items-center justify-center cursor-pointer'>{title}</span>
+				{children}
 			</Drawer.Trigger>
 			<Drawer.Portal>
 				<Drawer.Overlay className='fixed inset-0 bg-black/40' />
-				<Drawer.Content className='bg-neutral-200 dark:bg-neutral-900 flex flex-col rounded-t-[10px] h-full w-[400px] mt-24 fixed bottom-0 right-0'>
-					<div className='p-4 bg-neutral-200 dark:bg-neutral-800 flex-1 h-full'>
+				<Drawer.Content className='flex flex-col bg-white dark:bg-black rounded-t-[10px] h-full w-[400px] mt-24 fixed bottom-0 right-0'>
+					<div className='p-4 card-bg flex-1 h-full'>
 						<div className='max-w-md mx-auto'>
 							<Drawer.Title className='font-medium mb-4'>Submit a new post. {replyID && <span>Replying To: {replyID}</span>}</Drawer.Title>
 							<form
@@ -171,7 +173,7 @@ export function PostDrawer({ replyID, title }: PostDrawerProps) {
 									/>
 								</div>
 								<div>
-									<label className='w-full flex flex-col items-center justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-neutral-600/50 hover:bg-neutral-700/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500'>
+									<label className='w-full flex flex-col items-center justify-center text-sm font-medium button button-bgs'>
 										<button
 											type='button'
 											onClick={triggerFileInput}>
@@ -179,16 +181,14 @@ export function PostDrawer({ replyID, title }: PostDrawerProps) {
 										</button>
 									</label>
 									{selectedFile && (
-										<span className='mt-2 inline-flex gap-2 w-full max-w-full truncate items-center rounded-md bg-neutral-300 dark:bg-neutral-600 px-2 py-1 text-xs font-medium text-neutral-600 dark:text-neutral-200 ring-1 ring-inset ring-neutral-500/10 dark:ring-neutral-400/10'>
+										<div className='mt-2 inline-flex gap-2 items-center w-full max-w-full truncate button button-colors ring-1 ring-black/10 dark:ring-white/10'>
 											<span
-												className={
-													"inline-flex items-center justify-center p-1 px-2 rounded-md ring-1 ring-inset ring-neutral-500 cursor-pointer"
-												}
+												className={"inline-flex items-center bg-red-600 text-white justify-center p-1 rounded-md cursor-pointer"}
 												onClick={() => setSelectedFile(null)}>
-												X
+												<BadgeX />
 											</span>{" "}
 											{selectedFile.name}
-										</span>
+										</div>
 									)}
 									<input
 										ref={fileInputRef}
@@ -204,14 +204,14 @@ export function PostDrawer({ replyID, title }: PostDrawerProps) {
 								<button
 									type='submit'
 									disabled={isSubmitting}
-									className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-neutral-600 hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500'>
+									className='w-full flex flex-col items-center justify-center text-sm font-medium button action-button'>
 									{isSubmitting ? "Submitting..." : "Submit"}
 								</button>
 								<button
 									type='button' // Change to "button" to prevent form submission
 									onClick={resetForm}
 									disabled={isSubmitting}
-									className='w-full flex justify-center py-2 px-4 mt-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-neutral-700 hover:bg-neutral-700/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-600'>
+									className='w-full flex flex-col items-center justify-center text-sm font-medium button button-bgs'>
 									Cancel
 								</button>
 							</form>

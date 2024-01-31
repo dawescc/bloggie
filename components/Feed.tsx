@@ -5,17 +5,19 @@ import { format } from "date-fns";
 import { PostDrawer } from "./PostDrawer";
 import { createClient } from "@/utils/supabase/client";
 import { toast } from "sonner";
+import { MessageSquareQuote, Trash2 } from "lucide-react";
 
 interface Article {
 	id: string;
+	topic: string;
 	created_at: Date;
-	content: string;
-	image_url: string;
+	content?: string;
+	image_url?: string;
 	reply_to?: string;
-	reply_to_content?: string;
 	reply_to_topic?: string;
 	reply_to_created_at?: Date;
-	topic: string;
+	reply_to_content?: string;
+	reply_to_image_url?: string;
 }
 
 interface FeedProps {
@@ -51,7 +53,7 @@ export default function Feed({ data }: FeedProps) {
 
 	const filteredArticles = useMemo(() => {
 		return articles.filter(
-			(article) => (!selectedTopic || article.topic === selectedTopic) && article.content.toLowerCase().includes(searchTerm.toLowerCase())
+			(article) => (!selectedTopic || article.topic === selectedTopic) && article.content?.toLowerCase().includes(searchTerm.toLowerCase())
 		);
 	}, [searchTerm, articles, selectedTopic]);
 
@@ -68,6 +70,7 @@ export default function Feed({ data }: FeedProps) {
 	}
 
 	async function deleteArticle(id: string) {
+		// add confirmation
 		try {
 			const supabase = createClient();
 			const { error } = await supabase.from("articles").delete().eq("id", id);
@@ -86,8 +89,10 @@ export default function Feed({ data }: FeedProps) {
 			return (
 				<div
 					key={article.id}
-					className='p-3 flex flex-col gap-4 rounded-md no-underline bg-neutral-200/30 dark:bg-neutral-700/30 last-of-type:mb-6'>
-					<span className='text-xs font-semibold text-foreground/40'>{format(article.created_at, "MMM dd, yyyy")}</span>
+					id={article.id}
+					className='p-3 flex flex-col gap-4 rounded-xl card-bg last-of-type:mb-6'>
+					<div className='text-xs font-semibold'>{format(article.created_at, "MMM dd, yyyy")}</div>
+
 					{article.image_url && (
 						<div className='w-full h-auto max-w-md mx-auto rounded-lg overflow-hidden'>
 							<img
@@ -97,30 +102,38 @@ export default function Feed({ data }: FeedProps) {
 							/>
 						</div>
 					)}
-					<span className='text-lg font-bold leading-7'>{article.content}</span>
+
+					<div className='text-lg font-bold leading-7'>{article.content}</div>
 					{article.reply_to && (
-						<span className='text-sm font-light py-1 my-2 text-foreground/40 border-l-4 border-neutral-900/20 dark:border-neutral-100/20 pl-4 flex flex-col gap-2'>
+						<a
+							href={`#${article.reply_to}`}
+							className='text-xs font-mono py-1 flex flex-col gap-2 border-l-4 border-black dark:border-white px-2'>
 							{article.reply_to_content}
-							<span className='text-xs'>{format(article.reply_to_created_at!, "MMM dd, yyyy")}</span>
-						</span>
+							<span>{format(article.reply_to_created_at!, "MMM dd, yyyy")}</span>
+						</a>
 					)}
-					<span
+					<div
 						className='animate-in text-xs mr-auto py-2 text-foreground/50 underline'
 						onClick={() => handleTopicClick(article.topic)}>
 						{article.topic}
-					</span>
+					</div>
 					{user && (
-						<span className='bdark:text-neutral-100 inline-flex gap-6 items-center justify-center py- *:py-1 *:px-2 *:w-full'>
-							<span className='bg-neutral-600/20 rounded-md dark:text-neutral-100 inline-flex items-center justify-center *:w-full'>
-								<PostDrawer
-									title='Reply'
-									replyID={article.id}
-								/>
-							</span>
-							<span className='bg-neutral-600/20 rounded-md dark:text-neutral-100 inline-flex items-center justify-center *:w-full'>
-								<button onClick={() => handleDeleteClick(article.id)}>Delete</button>
-							</span>
-						</span>
+						<div className='dark:text-neutral-100 inline-flex gap-6 items-center justify-center py-2'>
+							<PostDrawer
+								title='Reply'
+								replyID={article.id}
+								children={
+									<button className='button w-full flex items-center justify-center button-bgs'>
+										<MessageSquareQuote />
+									</button>
+								}
+							/>
+							<button
+								className='button w-full flex items-center justify-center button-bgs'
+								onClick={() => handleDeleteClick(article.id)}>
+								<Trash2 />
+							</button>
+						</div>
 					)}
 				</div>
 			);
@@ -129,17 +142,17 @@ export default function Feed({ data }: FeedProps) {
 	);
 
 	return (
-		<div className='w-full h-full overflow-hidden flex flex-col gap-8'>
+		<div className='w-full h-full flex flex-col gap-8'>
 			<input
 				type='text'
-				className='rounded-lg p-2 border border-foreground/10 hover:border-foreground/20 transition-all bg-background text-foreground'
-				placeholder='Search...'
+				className='sticky top-5 rounded-lg p-3 shadow-sm ring ring-inset ring-black/10 dark:ring-white/20 bg-white dark:bg-black'
+				placeholder='Search Articles'
 				onChange={(e) => setSearchTerm(e.target.value)}
 			/>
 
 			{selectedTopic && (
 				<div className='flex gap-2'>
-					<span className='animate-in-fst text-xs font-semibold inline-flex gap-2 items-center py-1 px-2 rounded-md bg-foreground/5 dark:bg-foreground/20 border border-foreground/10'>
+					<span className='animate-in-fst text-xs font-semibold inline-flex gap-2 items-center button button-bgs'>
 						{selectedTopic}
 						<button onClick={() => setSelectedTopic(null)}>
 							<svg
@@ -155,7 +168,7 @@ export default function Feed({ data }: FeedProps) {
 				</div>
 			)}
 
-			<div className='flex flex-col overflow-auto gap-6'>{filteredArticles.map(renderArticle)}</div>
+			<div className='flex flex-col gap-6'>{filteredArticles.map(renderArticle)}</div>
 		</div>
 	);
 }

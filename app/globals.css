@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.button {
+	@apply cursor-pointer rounded-md py-2 px-3;
+}
+
+.action-button {
+	@apply bg-black dark:bg-white text-white dark:text-black;
+}
+
+.button-bgs {
+	@apply bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10;
+}
+
+.body-colors {
+	@apply bg-white text-black dark:bg-black dark:text-white;
+}
+
+.card-bg {
+	@apply bg-black/5 dark:bg-white/5;
+}
+
+.bar-colors {
+	@apply ring-black/10 dark:ring-white/10 bg-white dark:bg-black;
+}

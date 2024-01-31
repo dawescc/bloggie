@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import AuthButton from "@/components/AuthButton";
 import { PostDrawer } from "@/components/PostDrawer";
+import { MessageSquarePlus, LogOut } from "lucide-react";
 
 export default async function Index() {
 	const cookieStore = cookies();
@@ -12,16 +13,34 @@ export default async function Index() {
 	if (error) {
 		console.error("Unable to load user from database", error);
 	}
+
 	return (
 		<div className='w-full max-w-7xl mx-auto px-1 md:px-0 h-full flex flex-col items-center'>
 			{data.user ? (
-				<div className='inline-flex gap-10 pt-2 text-xs font-bold'>
-					<span className='bg-neutral-600/20 rounded-md dark:text-neutral-100 inline-flex items-center justify-center px-2 *:w-full'>
-						<PostDrawer title='New Post' />
-					</span>
-					<span className='bg-neutral-600/20 rounded-md dark:text-neutral-100 inline-flex items-center justify-center *:w-full'>
-						<AuthButton />
-					</span>
+				<div className='py-2 px-4 mb-4 rounded-full w-full text-xs font-bold fixed bottom-0 shadow-sm max-w-sm ring-2 ring-inset bar-colors'>
+					<div className='w-full flex flex-wrap gap-6 justify-evenly'>
+						<PostDrawer
+							title={`New`}
+							children={
+								<span className='button button-bgs'>
+									<span className='inline-flex items-center gap-2 justify-center'>
+										New
+										<MessageSquarePlus />
+									</span>
+								</span>
+							}
+						/>
+						<AuthButton
+							children={
+								<button className='button button-bgs'>
+									<span className='inline-flex items-center gap-2 justify-center'>
+										Logout
+										<LogOut />
+									</span>
+								</button>
+							}
+						/>
+					</div>
 				</div>
 			) : null}
 			<Header />
