@@ -90,8 +90,16 @@ export default function Feed({ data }: FeedProps) {
 				<div
 					key={article.id}
 					id={article.id}
-					className='p-3 flex flex-col gap-4 rounded-xl card-bg last-of-type:mb-6'>
-					<div className='text-xs font-semibold'>{format(article.created_at, "MMM dd, yyyy")}</div>
+					className='p-3 flex flex-col gap-4 rounded-xl shadow-sm card-bg last-of-type:mb-6'>
+					<div className='flex items-center text-xs'>
+						<div className='font-semibold'>{format(article.created_at, "MMM dd, yyyy")}</div>
+						&nbsp;in&nbsp;
+						<div
+							className='cursor-pointer underline'
+							onClick={() => handleTopicClick(article.topic)}>
+							{article.topic}
+						</div>
+					</div>
 
 					{article.image_url && (
 						<div className='w-full h-auto max-w-md mx-auto rounded-lg overflow-hidden'>
@@ -103,7 +111,7 @@ export default function Feed({ data }: FeedProps) {
 						</div>
 					)}
 
-					<div className='text-lg font-bold leading-7'>{article.content}</div>
+					<div className='text-2xl font-bold leading-7'>{article.content}</div>
 					{article.reply_to && (
 						<a
 							href={`#${article.reply_to}`}
@@ -112,11 +120,6 @@ export default function Feed({ data }: FeedProps) {
 							<span>{format(article.reply_to_created_at!, "MMM dd, yyyy")}</span>
 						</a>
 					)}
-					<div
-						className='animate-in text-xs mr-auto py-2 text-foreground/50 underline'
-						onClick={() => handleTopicClick(article.topic)}>
-						{article.topic}
-					</div>
 					{user && (
 						<div className='dark:text-neutral-100 inline-flex gap-6 items-center justify-center py-2'>
 							<PostDrawer
@@ -168,7 +171,7 @@ export default function Feed({ data }: FeedProps) {
 				</div>
 			)}
 
-			<div className='flex flex-col gap-6'>{filteredArticles.map(renderArticle)}</div>
+			<div className='flex flex-col gap-8'>{filteredArticles.map(renderArticle)}</div>
 		</div>
 	);
 }
