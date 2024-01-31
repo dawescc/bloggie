@@ -19,7 +19,7 @@
 }
 
 .card-bg {
-	@apply bg-black/5 dark:bg-white/5;
+	@apply bg-black/[9%] dark:bg-white/[9%];
 }
 
 .bar-colors {
