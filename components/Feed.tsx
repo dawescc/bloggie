@@ -100,12 +100,16 @@ export default function Feed({ data }: FeedProps) {
 						{article.topic}
 					</span>
 					{user && (
-						<span className='bg-neutral-600/20 rounded-md dark:text-neutral-100 inline-flex gap-6 items-center justify-center *:w-full py-1'>
-							<PostDrawer
-								title='Reply'
-								replyID={article.id}
-							/>
-							<button onClick={() => handleDeleteClick(article.id)}>Delete</button>
+						<span className='bdark:text-neutral-100 inline-flex gap-6 items-center justify-center py- *:py-1 *:px-2 *:w-full'>
+							<span className='bg-neutral-600/20 rounded-md dark:text-neutral-100 inline-flex items-center justify-center *:w-full'>
+								<PostDrawer
+									title='Reply'
+									replyID={article.id}
+								/>
+							</span>
+							<span className='bg-neutral-600/20 rounded-md dark:text-neutral-100 inline-flex items-center justify-center *:w-full'>
+								<button onClick={() => handleDeleteClick(article.id)}>Delete</button>
+							</span>
 						</span>
 					)}
 				</div>
