@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Drawer } from "vaul";
 import { createClient } from "@/utils/supabase/client";
 import { toast } from "sonner";
@@ -8,8 +8,8 @@ import { toast } from "sonner";
 type FormData = {
 	content: string;
 	topic: string;
-	image_url?: string;
-	reply_to?: string;
+	image_url?: string | null;
+	reply_to?: string | null;
 };
 
 type PostDrawerProps = {
@@ -17,38 +17,40 @@ type PostDrawerProps = {
 	replyID?: string;
 };
 
-function PostSuccessToast() {
-	toast.success("post submitted!");
-}
-function PostFailToast() {
-	toast.error("unable to submit post!");
-}
-
-function UploadSuccessToast() {
-	toast.success("image uploaded!");
-}
-
-function UploadFailToast() {
-	toast.error("unabke to upload image!");
-}
-
 export function PostDrawer({ replyID, title }: PostDrawerProps) {
 	const [open, setOpen] = useState(false);
 	const [formData, setFormData] = useState<FormData>({
 		content: "",
 		topic: "",
+		image_url: null,
 		reply_to: replyID,
 	});
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [validationError, setValidationError] = useState("");
 
 	const fileInputRef = useRef<HTMLInputElement>(null);
+
 	const triggerFileInput = () => {
 		fileInputRef.current?.click();
 	};
 
+	const resetForm = () => {
+		setFormData({
+			content: "",
+			image_url: null,
+			topic: "",
+			reply_to: null,
+		});
+		setSelectedFile(null);
+		setIsSubmitting(false);
+		setValidationError("");
+		setOpen(false);
+	};
+
 	async function uploadFile(file: File): Promise<string | null> {
 		const supabase = createClient();
-		const filePath = `uploads/${file.name}_${Date.now()}`;
+		const filePath = `uploads/${Date.now()}_${file.name}`;
 		const { data, error } = await supabase.storage.from("images").upload(filePath, file);
 
 		if (error) {
@@ -70,8 +72,25 @@ export function PostDrawer({ replyID, title }: PostDrawerProps) {
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+		setIsSubmitting(true);
+		setValidationError("");
+
+		// Always require a topic
+		if (!formData.topic.trim()) {
+			setValidationError("Topic is required.");
+			setIsSubmitting(false);
+			return;
+		}
+
+		// Require content if no image is selected
+		if (!formData.content.trim() && !selectedFile) {
+			setValidationError("Content is required when no image is uploaded.");
+			setIsSubmitting(false);
+			return;
+		}
 
 		let imageUrl = null;
 
@@ -82,14 +101,9 @@ export function PostDrawer({ replyID, title }: PostDrawerProps) {
 			}
 		}
 
-		if (!formData.content.trim() || !formData.topic.trim()) {
-			alert("Content and Topic are required.");
-			return;
-		}
-
 		try {
 			const supabase = createClient();
-			const { data, error } = await supabase.from("articles").insert([
+			await supabase.from("articles").insert([
 				{
 					content: formData.content,
 					topic: formData.topic,
@@ -98,14 +112,13 @@ export function PostDrawer({ replyID, title }: PostDrawerProps) {
 				},
 			]);
 
-			if (error) throw error;
-
-			setFormData({ content: "", topic: "", image_url: "", reply_to: "" }); // Reset form
-			setSelectedFile(null); // Reset selected file
+			PostSuccessToast();
+			resetForm();
 		} catch (error) {
 			PostFailToast();
+		} finally {
+			setIsSubmitting(false);
 		}
-		PostSuccessToast();
 	};
 
 	return (
@@ -136,7 +149,6 @@ export function PostDrawer({ replyID, title }: PostDrawerProps) {
 									<textarea
 										id='content'
 										name='content'
-										required
 										className='text-black mt-1 block resize-none w-full p-2 border border-neutral-300 rounded-md shadow-sm focus:outline-none focus:ring-neutral-500 focus:border-neutral-500'
 										value={formData.content}
 										onChange={handleChange}
@@ -188,16 +200,20 @@ export function PostDrawer({ replyID, title }: PostDrawerProps) {
 										className='hidden' // Hide the actual input
 									/>
 								</div>
+								{validationError && <div className='text-red-500'>{validationError}</div>}
 								<button
 									type='submit'
+									disabled={isSubmitting}
 									className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-neutral-600 hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500'>
-									Submit
+									{isSubmitting ? "Submitting..." : "Submit"}
 								</button>
-								<span
-									onClick={() => setOpen(false)}
-									className='cursor-pointer w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-neutral-700 hover:bg-neutral-700/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-600'>
+								<button
+									type='button' // Change to "button" to prevent form submission
+									onClick={resetForm}
+									disabled={isSubmitting}
+									className='w-full flex justify-center py-2 px-4 mt-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-neutral-700 hover:bg-neutral-700/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-600'>
 									Cancel
-								</span>
+								</button>
 							</form>
 						</div>
 					</div>
@@ -205,4 +221,20 @@ export function PostDrawer({ replyID, title }: PostDrawerProps) {
 			</Drawer.Portal>
 		</Drawer.Root>
 	);
+}
+
+function PostSuccessToast() {
+	toast.success("Post submitted!");
+}
+
+function PostFailToast() {
+	toast.error("Unable to submit post!");
+}
+
+function UploadSuccessToast() {
+	toast.success("Image uploaded!");
+}
+
+function UploadFailToast() {
+	toast.error("Unable to upload image!");
 }

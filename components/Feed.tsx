@@ -4,6 +4,7 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { format } from "date-fns";
 import { PostDrawer } from "./PostDrawer";
 import { createClient } from "@/utils/supabase/client";
+import { toast } from "sonner";
 
 interface Article {
 	id: string;
@@ -58,14 +59,23 @@ export default function Feed({ data }: FeedProps) {
 		setSelectedTopic(topic);
 	}, []);
 
+	function DeleteSuccessToast() {
+		toast.success("post deleted!");
+	}
+
+	function DeleteFailToast() {
+		toast.error("unable to delete post!");
+	}
+
 	async function deleteArticle(id: string) {
 		try {
 			const supabase = createClient();
 			const { error } = await supabase.from("articles").delete().eq("id", id);
 			if (error) throw error;
 		} catch (error) {
-			console.error("Unable to delete article", error);
+			DeleteFailToast();
 		}
+		DeleteSuccessToast();
 	}
 	const handleDeleteClick = useCallback((id: string) => {
 		deleteArticle(id);
