@@ -6,6 +6,7 @@ import { PostDrawer } from "./PostDrawer";
 import { createClient } from "@/utils/supabase/client";
 import { toast } from "sonner";
 import { MessageSquareQuote, Trash2 } from "lucide-react";
+import { motion, Variants } from "framer-motion";
 
 interface Article {
 	id: string;
@@ -29,6 +30,23 @@ export default function Feed({ data }: FeedProps) {
 	const [searchTerm, setSearchTerm] = useState<string>("");
 	const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
 	const [user, setUser] = useState<any>(null);
+	const variants: Variants = {
+		offscreen: {
+			y: 10,
+			x: -100,
+			rotate: 0,
+		},
+		onscreen: {
+			y: 0,
+			x: 0,
+			rotate: 0,
+			transition: {
+				type: "spring",
+				bounce: 0.4,
+				duration: 0.5,
+			},
+		},
+	};
 
 	useEffect(() => {
 		if (Array.isArray(data)) {
@@ -87,10 +105,14 @@ export default function Feed({ data }: FeedProps) {
 	const renderArticle = useCallback(
 		(article: Article) => {
 			return (
-				<div
+				<motion.div
 					key={article.id}
 					id={article.id}
-					className='p-3 text-medium font-normal flex flex-col gap-4 card-bg last-of-type:mb-6 slide-in'>
+					className='p-3 text-medium font-normal flex flex-col gap-4 card-bg last-of-type:mb-6'
+					variants={variants}
+					initial='offscreen'
+					whileInView='onscreen'
+					viewport={{ once: true, amount: 0.1 }}>
 					<div
 						id='meta'
 						className='flex flex-col uppercase gap-2 text-xs font-light'>
@@ -152,7 +174,7 @@ export default function Feed({ data }: FeedProps) {
 							</button>
 						</div>
 					)}
-				</div>
+				</motion.div>
 			);
 		},
 		[user]

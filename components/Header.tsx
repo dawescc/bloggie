@@ -11,20 +11,17 @@ export default function Header() {
 					<a
 						className='underline max-w-fit inline-flex items-center button button-bgs'
 						href='https://dawes.cc'>
-						<Link size={16} />
-						<span className='hidden md:inline-flex'>&nbsp;website</span>
+						<Link size={22} />
 					</a>
 					<a
 						className='underline max-w-fit inline-flex items-center button button-bgs'
 						href='https://x.com/dawescc'>
-						<Twitter size={16} />
-						<span className='hidden md:inline-flex'>&nbsp;twitter</span>
+						<Twitter size={22} />
 					</a>
 					<a
 						className='underline max-w-fit inline-flex items-center button button-bgs'
 						href='https://github.com/dawescc'>
-						<Github size={16} />
-						<span className='hidden md:inline-flex'>&nbsp;github</span>
+						<Github size={22} />
 					</a>
 				</div>
 			</div>
