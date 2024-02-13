@@ -134,8 +134,8 @@ export function PostDrawer({ replyID, title, children }: PostDrawerProps) {
 				{children}
 			</Drawer.Trigger>
 			<Drawer.Portal>
-				<Drawer.Overlay className='fixed inset-0 bg-black/40' />
-				<Drawer.Content className='flex flex-col bg-white dark:bg-black rounded-t-[10px] h-full w-[400px] mt-24 fixed bottom-0 right-0'>
+				<Drawer.Overlay className='fixed inset-0 bg-black/40 z-[10]' />
+				<Drawer.Content className=' z-[11] flex flex-col bg-colors h-full w-[400px] mt-24 fixed bottom-0 right-0'>
 					<div className='p-4 card-bg flex-1 h-full'>
 						<div className='max-w-md mx-auto'>
 							<Drawer.Title className='font-medium mb-4'>Submit a new post. {replyID && <span>Replying To: {replyID}</span>}</Drawer.Title>
@@ -177,7 +177,7 @@ export function PostDrawer({ replyID, title, children }: PostDrawerProps) {
 										<button
 											type='button'
 											onClick={triggerFileInput}>
-											(Optional) Upload Image
+											Upload Image
 										</button>
 									</label>
 									{selectedFile && (
