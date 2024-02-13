@@ -7,6 +7,7 @@ import { createClient } from "@/utils/supabase/client";
 import { toast } from "sonner";
 import { MessageSquareQuote, Trash2 } from "lucide-react";
 import { motion, Variants } from "framer-motion";
+import getData from "@/actions/GetData";
 
 interface Article {
 	id: string;
@@ -97,6 +98,12 @@ export default function Feed({ data }: FeedProps) {
 			DeleteFailToast();
 		}
 		DeleteSuccessToast();
+		const updatedArticles = await getData();
+		if (Array.isArray(updatedArticles)) {
+			setArticles(updatedArticles);
+		} else {
+			setArticles([]);
+		}
 	}
 
 	const handleDeleteClick = useCallback((id: string) => {
@@ -116,7 +123,7 @@ export default function Feed({ data }: FeedProps) {
 					viewport={{ once: true, amount: 0.1 }}>
 					<div
 						id='meta'
-						className='flex flex-col uppercase gap-2 text-xs font-light'>
+						className='flex flex-col mr-auto uppercase gap-2 text-xs font-light'>
 						<div
 							id='date'
 							className=''>
