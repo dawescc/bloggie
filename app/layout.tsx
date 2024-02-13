@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html
 			lang='en'
 			className={BeVietnamPro.className}>
-			<body className={"antialiased scroll-smooth relative body-colors"}>
+			<body className={"antialiased scroll-smooth relative bg-colors"}>
 				<Toaster
 					position='top-right'
 					richColors

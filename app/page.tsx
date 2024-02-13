@@ -5,6 +5,7 @@ import { createClient } from "@/utils/supabase/server";
 import AuthButton from "@/components/AuthButton";
 import { PostDrawer } from "@/components/PostDrawer";
 import { MessageSquarePlus, LogOut } from "lucide-react";
+import Footer from "@/components/Footer";
 
 export default async function Index() {
 	const cookieStore = cookies();
@@ -15,9 +16,9 @@ export default async function Index() {
 	}
 
 	return (
-		<div className='w-full max-w-7xl mx-auto px-1 md:px-0 h-full flex flex-col items-center'>
+		<div className='w-full max-w-7xl mx-auto h-full flex flex-col items-center'>
 			{data.user ? (
-				<div className='py-2 px-4 mb-4 rounded-full w-full text-xs font-bold fixed bottom-0 shadow-sm max-w-sm ring-2 ring-inset bar-colors'>
+				<div className='z-[1] py-2 px-4 mb-4 rounded-full w-full text-xs font-bold fixed bottom-0 shadow-sm max-w-sm ring-2 ring-inset bar-colors'>
 					<div className='w-full flex flex-wrap gap-6 justify-evenly'>
 						<PostDrawer
 							title={`New`}
@@ -45,6 +46,7 @@ export default async function Index() {
 			) : null}
 			<Header />
 			<Content />
+			<Footer />
 		</div>
 	);
 }

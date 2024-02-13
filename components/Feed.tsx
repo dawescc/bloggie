@@ -90,36 +90,50 @@ export default function Feed({ data }: FeedProps) {
 				<div
 					key={article.id}
 					id={article.id}
-					className='p-3 flex flex-col gap-4 rounded-xl shadow-sm card-bg last-of-type:mb-6'>
-					<div className='flex items-center text-xs'>
-						<div className='font-semibold'>{format(article.created_at, "MMM dd, yyyy")}</div>
-						&nbsp;in&nbsp;
+					className='p-3 text-medium font-normal flex flex-col gap-4 card-bg last-of-type:mb-6 slide-in'>
+					<div
+						id='meta'
+						className='flex flex-col uppercase gap-2 text-xs font-light'>
 						<div
-							className='cursor-pointer underline'
+							id='date'
+							className=''>
+							{format(article.created_at, "MMM dd, yyyy")}
+						</div>
+						<div
+							id='topic'
+							className='underline cursor-pointer'
 							onClick={() => handleTopicClick(article.topic)}>
 							{article.topic}
 						</div>
 					</div>
 
 					{article.image_url && (
-						<div className='w-full h-auto max-w-md mx-auto rounded-lg overflow-hidden'>
+						<div
+							id='image'
+							className='w-full h-auto rounded-2xl overflow-hidden'>
 							<img
-								className='w-full object-cover rounded-lg'
+								className='w-full object-cover'
 								src={article.image_url}
 								alt={"Post Image"}
 							/>
 						</div>
 					)}
 
-					<div className='text-2xl font-bold leading-7'>{article.content}</div>
+					<div
+						id='content'
+						className='font-medium leading-7'>
+						{article.content}
+					</div>
+
 					{article.reply_to && (
 						<a
 							href={`#${article.reply_to}`}
-							className='text-xs font-mono py-1 flex flex-col gap-2 border-l-4 border-black dark:border-white px-2'>
+							className='text-xs py-1 flex flex-col gap-2 border-l-4 border-neutral-900/20 dark:border-neutral-200/20 px-2'>
 							{article.reply_to_content}
 							<span>{format(article.reply_to_created_at!, "MMM dd, yyyy")}</span>
 						</a>
 					)}
+
 					{user && (
 						<div className='dark:text-neutral-100 inline-flex gap-6 items-center justify-center py-2'>
 							<PostDrawer
@@ -145,17 +159,19 @@ export default function Feed({ data }: FeedProps) {
 	);
 
 	return (
-		<div className='w-full h-full flex flex-col gap-8'>
-			<input
-				type='text'
-				className='sticky top-5 rounded-lg p-3 shadow-sm ring ring-inset ring-black/10 dark:ring-white/20 bg-white dark:bg-black'
-				placeholder='Search Articles'
-				onChange={(e) => setSearchTerm(e.target.value)}
-			/>
+		<div className='w-full h-full flex flex-col gap-4'>
+			<div className='sticky top-0 z-[1] flex py-2 px-2 w-full search-bg-colors justify-center items-center'>
+				<input
+					type='text'
+					className='w-full max-w-3xl p-3 shadow-sm ring ring-inset ring-black/10 dark:ring-white/20 bg-opacity-100 bg-neutral-100 dark:bg-neutral-800'
+					placeholder='Search...'
+					onChange={(e) => setSearchTerm(e.target.value)}
+				/>
+			</div>
 
 			{selectedTopic && (
 				<div className='flex gap-2'>
-					<span className='animate-in-fst text-xs font-semibold inline-flex gap-2 items-center button button-bgs'>
+					<span className='animate-in-fst max-w-prose mx-auto text-xs font-semibold inline-flex gap-2 items-center button button-bgs'>
 						{selectedTopic}
 						<button onClick={() => setSelectedTopic(null)}>
 							<svg
@@ -171,7 +187,7 @@ export default function Feed({ data }: FeedProps) {
 				</div>
 			)}
 
-			<div className='flex flex-col gap-8'>{filteredArticles.map(renderArticle)}</div>
+			<div className='flex flex-col max-w-prose mx-auto px-4 md:px-0 gap-6'>{filteredArticles.map(renderArticle)}</div>
 		</div>
 	);
 }
