@@ -9,17 +9,17 @@ export default function Header() {
 				</div>
 				<div className='flex gap-4 md:gap-2 justify-evenly items-center h-full *:font-normal text-link'>
 					<a
-						className='underline max-w-fit inline-flex items-center button button-bgs'
+						className='underline inline-flex items-center button button-bgs'
 						href='https://dawes.cc'>
 						<Link size={22} />
 					</a>
 					<a
-						className='underline max-w-fit inline-flex items-center button button-bgs'
+						className='underline inline-flex items-center button button-bgs'
 						href='https://x.com/dawescc'>
 						<Twitter size={22} />
 					</a>
 					<a
-						className='underline max-w-fit inline-flex items-center button button-bgs'
+						className='underline inline-flex items-center button button-bgs'
 						href='https://github.com/dawescc'>
 						<Github size={22} />
 					</a>

@@ -18,7 +18,7 @@ export default async function Index() {
 	return (
 		<div className='w-full max-w-7xl mx-auto h-full flex flex-col items-center'>
 			{data.user ? (
-				<div className='z-[1] py-2 px-4 mb-4 rounded-full w-full text-xs font-bold fixed bottom-0 shadow-sm max-w-sm ring-2 ring-inset bar-colors'>
+				<div className='z-[1] py-2 px-2 w-full text-xs font-bold fixed bottom-0 md:right-0 md:mr-[10%] md:max-w-xs md:mb-1 shadow-sm ring-2 ring-inset ring-black/10 dark:ring-white/10 search-bg-colors'>
 					<div className='w-full flex flex-wrap gap-6 justify-evenly'>
 						<PostDrawer
 							title={`New`}

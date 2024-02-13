@@ -98,6 +98,7 @@ export default function Feed({ data }: FeedProps) {
 		}
 		DeleteSuccessToast();
 	}
+
 	const handleDeleteClick = useCallback((id: string) => {
 		deleteArticle(id);
 	}, []);
@@ -108,7 +109,7 @@ export default function Feed({ data }: FeedProps) {
 				<motion.div
 					key={article.id}
 					id={article.id}
-					className='p-3 text-medium font-normal flex flex-col gap-4 card-bg last-of-type:mb-6'
+					className='p-3 text-medium font-normal flex flex-col gap-4 card-bg last-of-type:mb-6 relative'
 					variants={variants}
 					initial='offscreen'
 					whileInView='onscreen'
@@ -157,7 +158,7 @@ export default function Feed({ data }: FeedProps) {
 					)}
 
 					{user && (
-						<div className='dark:text-neutral-100 inline-flex gap-6 items-center justify-center py-2'>
+						<div className='flex-1 flex ml-auto gap-6 items-center justify-center py-2'>
 							<PostDrawer
 								title='Reply'
 								replyID={article.id}

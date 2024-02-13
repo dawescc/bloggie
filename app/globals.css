@@ -32,3 +32,11 @@
 .card-bg {
 	@apply bg-black/[3%] dark:bg-white/[3%];
 }
+
+.button {
+	transition: all 0.2s;
+}
+
+.button:active {
+	transform: translateY(1px);
+}
