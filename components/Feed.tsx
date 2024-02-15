@@ -34,7 +34,7 @@ export default function Feed({ data }: FeedProps) {
 	const variants: Variants = {
 		offscreen: {
 			y: 10,
-			x: -100,
+			x: -33,
 			rotate: 0,
 		},
 		onscreen: {
@@ -123,7 +123,7 @@ export default function Feed({ data }: FeedProps) {
 					viewport={{ once: true, amount: 0.1 }}>
 					<div
 						id='meta'
-						className='flex flex-col mr-auto uppercase gap-2 text-xs font-light'>
+						className='flex w-full items-center justify-between uppercase gap-2 text-xs font-light'>
 						<div
 							id='date'
 							className=''>
@@ -217,7 +217,7 @@ export default function Feed({ data }: FeedProps) {
 				</div>
 			)}
 
-			<div className='flex flex-col max-w-prose mx-auto px-4 md:px-0 gap-6'>{filteredArticles.map(renderArticle)}</div>
+			<div className='flex flex-col max-w-prose mx-auto px-4 md:px-0 gap-6 overflow-hidden'>{filteredArticles.map(renderArticle)}</div>
 		</div>
 	);
 }

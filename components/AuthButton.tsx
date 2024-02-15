@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { toast } from "sonner";
 
 export default async function AuthButton({ children }: { children: React.ReactNode }) {
 	const cookieStore = cookies();
@@ -16,8 +16,12 @@ export default async function AuthButton({ children }: { children: React.ReactNo
 		const cookieStore = cookies();
 		const supabase = createClient(cookieStore);
 		await supabase.auth.signOut();
-		return redirect("/login");
+		LogOutToast();
 	};
 
 	return user ? <form action={signOut}>{children}</form> : null;
+}
+
+function LogOutToast() {
+	toast.success("Logged out!");
 }
