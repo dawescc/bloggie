@@ -1,30 +1,42 @@
+import Footer from "@/components/Footer";
+import "./globals.css";
 import { Be_Vietnam_Pro } from "next/font/google";
 
-import "./globals.css";
-import { Toaster } from "sonner";
+const vietnam = Be_Vietnam_Pro({
+	subsets: ["latin"],
+	weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
-const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000";
-
+const defaultUrl = process.env.VERCEL_URL ? `https://blog.dawes.cc/` : "http://localhost:3000";
+const title = "Blog — Ryan Dawes";
 export const metadata = {
+	title: title,
 	metadataBase: new URL(defaultUrl),
-	title: "blog - dawes.cc",
-	description: "blog by ryan dawes",
+	openGraph: {
+		title: title,
+		url: new URL(defaultUrl),
+		siteName: title,
+	},
+	twitter: {
+		title: title,
+		card: "summary_large_image",
+		site: "@dawescc",
+		creator: "@dawescc",
+	},
+	description: "A micro blog.",
 };
 
-// If loading a variable font, you don't need to specify the font weight
-const BeVietnamPro = Be_Vietnam_Pro({ weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], subsets: ["latin"] });
+export const viewport = {
+	themeColor: "transparent",
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: any) {
 	return (
 		<html
 			lang='en'
-			className={BeVietnamPro.className}>
-			<body className={"antialiased scroll-smooth relative bg-colors"}>
-				<Toaster
-					position='top-right'
-					richColors
-				/>
-				<main className='min-h-dvh w-full flex flex-col'>{children}</main>
+			className={vietnam.className}>
+			<body className='relative flex justify-center text-3xl lg:text-4xl leading-10 lg:leading-[46px] tracking-[0.02rem;] font-medium'>
+				<main className='relative flex-[1_1_100%] overflow-hidden max-w-xl lg:max-w-4xl pb-32'>{children}</main>
 			</body>
 		</html>
 	);

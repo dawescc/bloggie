@@ -2,48 +2,95 @@
 @tailwind components;
 @tailwind utilities;
 
-.bg-colors {
-	@apply bg-neutral-200 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-200;
-}
-.search-bg-colors {
-	@apply bg-neutral-200 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-200 bg-opacity-30 dark:bg-opacity-30 backdrop-blur-lg;
+:root {
+	--bg-color: 255, 255, 255;
+	--text-color: 0, 0, 0;
 }
 
-.menubar-bg-colors {
-	@apply bg-gradient-to-t from-neutral-200 dark:from-neutral-900 to-transparent backdrop-blur-[1px];
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bg-color: 0, 0, 0;
+		--text-color: 255, 255, 255;
+	}
 }
 
-.text-link {
-	@apply text-blue-500 dark:text-blue-400;
+html {
+	@apply antialiased;
+	scroll-behavior: smooth;
+	background-color: rgba(var(--bg-color), 1);
+	color: rgba(var(--text-color), 1);
 }
 
-.bar-colors {
-	@apply bg-opacity-100 ring-black/10 dark:ring-white/10 bg-neutral-200 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200;
+body {
+	padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
-.button {
-	@apply cursor-pointer rounded-md py-2 px-3;
+a:not(.clean) {
+	text-decoration: underline;
+	text-decoration-color: rgba(var(--text-color), 0.15);
+	@apply transition-all duration-500;
+
+	&:hover {
+		text-decoration-color: rgba(var(--text-color), 1);
+	}
+
+	@media (prefers-color-scheme: dark) {
+		& {
+			text-decoration-color: rgba(var(--text-color), 0.55);
+		}
+
+		&:hover {
+			text-decoration-color: rgba(var(--text-color), 0.9);
+		}
+	}
 }
 
-.action-button {
-	@apply bg-black dark:bg-white text-white dark:text-black;
+@media (prefers-color-scheme: dark) {
+	.hover-bg {
+		&:hover {
+			background-color: rgba(var(--text-color), 0.0225);
+		}
+	}
 }
 
-.button-bgs {
-	@apply bg-black/[3%] hover:bg-black/[6%] dark:bg-white/[3%] dark:hover:bg-white/[6%];
-}
-.menubarbutton-bgs {
-	@apply bg-neutral-200 hover:bg-neutral-100 dark:bg-neutral-900 dark:hover:bg-neutral-800;
+.post-card {
+	@apply w-full flex flex-col gap-4 max-w-md mx-auto rounded-3xl py-16 px-10;
+	@apply text-base;
+	box-shadow: 0 4px 4px hsl(0deg 0% 0% / 0.095), 0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
+	border: 1px solid rgba(var(--text-color), 0.075);
+	border-top: 1px solid rgba(var(--text-color), 0.033);
+	border-inline: 1px solid rgba(var(--text-color), 0.066);
+
+	.post-topic,
+	.post-date {
+		@apply font-light text-sm;
+	}
+
+	& .post-topic {
+		@apply max-w-fit px-2 py-[1px] rounded-lg;
+		color: rgba(var(--text-color), 1);
+		background-color: rgba(var(--text-color), 0.05);
+
+		&.tech,
+		&.f1 {
+			@apply bg-red-600/20 text-red-900;
+		}
+
+		&.design {
+			@apply bg-pink-400/20 text-pink-900;
+		}
+
+		&.football {
+			@apply bg-blue-400/20 text-blue-900;
+		}
+	}
+
+	.post-content {
+		@apply text-pretty text-xl;
+	}
 }
 
-.card-bg {
-	@apply bg-black/[3%] dark:bg-white/[3%];
-}
-
-.button {
-	transition: all 0.2s;
-}
-
-.button:active {
-	transform: translateY(1px);
+.footer-text {
+	@apply font-light text-xs text-center;
+	color: rgba(var(--text-color), 0.25);
 }
