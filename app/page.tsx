@@ -19,7 +19,6 @@ export default function Index() {
 					</a>
 				</div>
 			</div>
-
 			<Feed />
 			<Footer />
 		</div>
