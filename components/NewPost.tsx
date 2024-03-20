@@ -2,7 +2,6 @@ import { submitPost } from "@/actions/Submit";
 import { createClient } from "@/utils/supabase/server";
 import { Forward, ImagePlus, Tag } from "lucide-react";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 export default async function NewPost() {
 	const cookieStore = cookies();

@@ -159,3 +159,7 @@ input.sign-in {
 	@apply rounded-md px-4 py-2 bg-inherit border mb-6;
 	border: 1px solid rgba(var(--text-color), 0.125);
 }
+
+.img-card {
+	@apply absolute w-[100px] lg:w-[120px] aspect-square rounded-3xl transition-all m-5 top-0 right-0;
+}
