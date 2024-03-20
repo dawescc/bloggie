@@ -22,8 +22,8 @@ export default async function Feed() {
 						<div
 							key={article.id}
 							id={article.id}
-							className='post-card'
-							style={{ transform: `rotate(${degree}deg)` }}>
+							style={{ transform: `rotate(${degree}deg)` }}
+							className={`post-card hover:scale-[1.025] hover:-rotate-[${degree}deg] hover:isolate`}>
 							{article.image_url && (
 								<Image
 									width={500}
@@ -39,7 +39,7 @@ export default async function Feed() {
 							{article.reply_to && (
 								<a
 									href={`#${article.reply_to}`}
-									className={`post-reply clean hover:rotate-[${degree}deg] group`}>
+									className={`post-reply clean hover:rotate-[${degree}deg]`}>
 									{article.reply_to_image_url && (
 										<Image
 											width={500}
