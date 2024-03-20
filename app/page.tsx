@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function Index() {
 	return (
-		<div className='flex flex-col gap-12 pt-20 px-8 relative'>
+		<>
 			<a
 				href='https://twitter.com/dawescc'
 				className='group w-fit'>
@@ -19,19 +19,21 @@ export default function Index() {
 				<div className='img-card z-[2] bg-gray-400 -rotate-6 group-hover:rotate-6 translate-x-0 group-hover:translate-x-1'></div>
 				<div className='img-card z-[1] bg-gray-700 rotate-[9deg] group-hover:-rotate-[9deg] translate-x-0 group-hover:-translate-x-1'></div>
 			</a>
-			<div className='flex flex-col gap-6'>
-				<p className='paragraph'>Blog</p>
-				<div className='flex gap-6'>
-					<a
-						href='https://dawes.cc'
-						className='w-fit inline-flex items-center gap-2 text-xl'>
-						Website
-					</a>
+			<div className='flex flex-col gap-12 pt-20 px-8'>
+				<div className='flex flex-col gap-6'>
+					<p className='paragraph'>Blog</p>
+					<div className='flex gap-6'>
+						<a
+							href='https://dawes.cc'
+							className='w-fit inline-flex items-center gap-2 text-xl'>
+							Website
+						</a>
+					</div>
 				</div>
+				<Feed />
+				<Footer />
+				<NewPost />
 			</div>
-			<Feed />
-			<Footer />
-			<NewPost />
-		</div>
+		</>
 	);
 }

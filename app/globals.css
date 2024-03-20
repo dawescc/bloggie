@@ -142,7 +142,7 @@ a:not(.clean) {
 
 	.add-button,
 	button.submit {
-		@apply rounded-md aspect-square grid place-items-center px-2;
+		@apply aspect-square grid place-items-center px-0;
 	}
 }
 

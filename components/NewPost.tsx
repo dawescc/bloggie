@@ -22,7 +22,7 @@ export default async function NewPost() {
 					id='content'
 					className=''
 				/>
-				<div className='flex gap-2 px-1'>
+				<div className='flex gap-4 lg:gap-1 px-1'>
 					<div className='add-button'>
 						<Tag size={20} />
 					</div>
